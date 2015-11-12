@@ -61,3 +61,6 @@ med/media/
 
 # Hitch directory
 tests/.hitch
+
+# biult docs
+docs/_build
