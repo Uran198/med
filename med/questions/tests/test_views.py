@@ -134,3 +134,144 @@ class QuestionDetailsTest(TestCase):
     def test_get_context_data(self):
         response = self.view(self.request, pk=self.question.pk, slug=self.question.slug)
         self.assertListEqual(list(response.context_data.get('comments')), [self.comment])
+
+
+class CommentCreateTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="John",
+            password="password"
+        )
+        self.question = Question.objects.create(
+            title="Title",
+            text="Some text",
+            author=self.user
+        )
+        self.factory = RequestFactory()
+        self.view = views.CommentCreate.as_view()
+        self.request = self.factory.post('/fake')
+        self.request.user = self.user
+        self.request.META['HTTP_REFERER'] = '/'
+
+    def test_allowed_http_methods(self):
+        request = self.factory.get('/fake')
+        request.user = self.user
+        response = self.view(request, parent_id=self.question.pk)
+        self.assertEqual(response.status_code, 405)
+
+    def test_form_invalid_with_referer(self):
+        response = self.view(self.request, parent_id=self.question.pk)
+        self.assertEqual(response.status_code, 302)
+
+    def test_form_invalid_no_referer(self):
+        request = self.factory.post('/fake')
+        request.user = self.user
+        response = self.view(request, parent_id=self.question.pk)
+        self.assertEqual(response.status_code, 400)
+
+    def test_form_valid(self):
+        self.request = self.factory.post('/fake', {'text': 'some text'})
+        self.request.META['HTTP_REFERER'] = '/'
+        self.request.user = self.user
+        self.view(self.request, parent_id=self.question.pk)
+        self.assertEqual(len(self.question.comment_set.all()), 1)
+
+
+class CommentUpdateTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="John",
+            password="password"
+        )
+        self.bob = User.objects.create_user(
+            username="Bob",
+            password="password",
+        )
+        self.question = Question.objects.create(
+            title="Title",
+            text="Some text",
+            author=self.user
+        )
+        self.comment = self.question.comment_set.create(
+            text="Some comment",
+            author=self.user,
+        )
+        self.factory = RequestFactory()
+        self.view = views.CommentUpdate.as_view()
+        self.request = self.factory.post('/fake', {'text': "another text"})
+        self.request.user = self.user
+
+    def test_anonymous(self):
+        request = self.factory.get('/fake')
+        request.user = AnonymousUser()
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 302)
+
+    def test_is_not_author(self):
+        request = self.factory.get('/fake')
+        request.user = self.bob
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 302)
+
+    def test_is_author(self):
+        request = self.factory.get('/fake')
+        request.user = self.user
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 200)
+
+    def test_success_update(self):
+        response = self.view(self.request, pk=self.comment.pk)
+        self.assertEqual(response['Location'], self.question.get_absolute_url())
+        self.assertEqual(self.question.comment_set.get(pk=self.comment.pk).text,
+                         "another text")
+
+
+class CommentDeleteTest(TestCase):
+
+    def setUp(self):
+        self.user = User.objects.create_user(
+            username="John",
+            password="password"
+        )
+        self.bob = User.objects.create_user(
+            username="Bob",
+            password="password",
+        )
+        self.question = Question.objects.create(
+            title="Title",
+            text="Some text",
+            author=self.user
+        )
+        self.comment = self.question.comment_set.create(
+            text="Some comment",
+            author=self.user,
+        )
+        self.factory = RequestFactory()
+        self.view = views.CommentDelete.as_view()
+        self.request = self.factory.post('/fake')
+        self.request.user = self.user
+
+    def test_anonymous(self):
+        request = self.factory.get('/fake')
+        request.user = AnonymousUser()
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 302)
+
+    def test_is_not_author(self):
+        request = self.factory.get('/fake')
+        request.user = self.bob
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 302)
+
+    def test_is_author(self):
+        request = self.factory.get('/fake')
+        request.user = self.user
+        response = self.view(request, pk=self.comment.pk)
+        self.assertEqual(response.status_code, 200)
+
+    def test_success_delete(self):
+        response = self.view(self.request, pk=self.comment.pk)
+        self.assertEqual(response['Location'], self.question.get_absolute_url())
+        self.assertEquals(len(self.question.comment_set.all()), 0)
