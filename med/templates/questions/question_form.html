@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+
+<form method="POST" action="">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit" value="{% trans 'Ask question' %}"/>
+</form>
+
+{% endblock content %}

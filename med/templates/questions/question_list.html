@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<ul>
+{% for question in question_list %}
+<li>
+  <p>
+  <a href="{% url 'questions:details' question.pk %}">{{ question.title }}</a>
+  {{ question.text }}
+  </p>
+</li>
+{% endfor %}
+</ul>
+
+{% endblock content %}

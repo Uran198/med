@@ -2,6 +2,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.http import HttpResponseBadRequest
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
+from django.forms import modelform_factory
 
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 
@@ -38,6 +39,9 @@ class QuestionDetails(DetailView):
     def get_context_data(self, *args, **kwargs):
         context_data = super(QuestionDetails, self).get_context_data()
         context_data['comments'] = self.object.comment_set.all()
+        # TODO: This must be wrong!
+        context_data['comment_form'] = modelform_factory(CommentCreate.model,
+                                                         fields=CommentCreate.fields)()
         return context_data
 
     def dispatch(self, *args, **kwargs):

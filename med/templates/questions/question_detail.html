@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags %}
+
+{% block content %}
+
+<h1>{{ question.title }}</h1>
+<p>{{ question.text }}</p>
+<p>{{ question.author }}</p>
+
+<ul>
+  {% for comment in comments %}
+  <li>
+    <p>{{ comment.text }}</p>
+    <p>{{ comment.author }}</p>
+  </li>
+  {% endfor %}
+
+  <li>
+    <form action="{% url 'questions:add_comment' question.pk %}" method="POST">
+      {% csrf_token %}
+      {{ comment_form|crispy }}
+      <input type="submit" value="{% trans 'Add comment' %}" />
+    </form>
+  </li>
+</ul>
+
+{% endblock content %}
