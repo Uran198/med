@@ -12,6 +12,8 @@ from __future__ import absolute_import, unicode_literals
 
 import environ
 
+from django.utils.translation import ugettext_lazy as _
+
 ROOT_DIR = environ.Path(__file__) - 3  # (/a/b/myfile.py - 3 = /)
 APPS_DIR = ROOT_DIR.path('med')
 
@@ -56,6 +58,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE_CLASSES = (
     # Make sure djangosecure.middleware.SecurityMiddleware is listed first
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -114,7 +117,16 @@ DATABASES['default']['ATOMIC_REQUESTS'] = True
 TIME_ZONE = 'Europe/Kiev'
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#language-code
-LANGUAGE_CODE = 'en-us'
+# LANGUAGE_CODE = 'en-us'
+
+LANGUAGES = (
+    ('uk', _('Ukrainian')),
+    ('en', _('English')),
+)
+
+LOCALE_PATHS = (
+    'locale',
+)
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#site-id
 SITE_ID = 1
