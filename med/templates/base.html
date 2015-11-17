@@ -63,6 +63,9 @@
             <ul class="nav navbar-nav pull-right">
               {% if request.user.is_authenticated %}
                 <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:list' %}">{% trans "Users" %}</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
                 </li>
                 <li class="nav-item">
@@ -108,7 +111,7 @@
       {% endif %}
 
       {% block content %}
-        <p>Use this document as a way to quick start any new project.</p>
+      <p>{% trans "Still in testing" %}</p>
       {% endblock content %}
 
     </div> <!-- /container -->

@@ -13,6 +13,11 @@ urlpatterns = [
         name='update'
         ),
 
+    url(r'^delete/(?P<pk>[0-9]+)/$',
+        views.QuestionDelete.as_view(),
+        name='delete'
+        ),
+
     url(r'^(?P<pk>[0-9]+)/(?P<slug>[\w-]+)/$',
         views.QuestionDetails.as_view(),
         name='details',
@@ -30,8 +35,18 @@ urlpatterns = [
 
     # Comments
 
-    url(r'^addcomment/(?P<parent_id>[0-9]+)/$',
+    url(r'^comments/create/(?P<parent_id>[0-9]+)/$',
         views.CommentCreate.as_view(),
         name='add_comment',
+        ),
+
+    url(r'^comments/update/(?P<pk>[0-9]+)/$',
+        views.CommentUpdate.as_view(),
+        name='comment_update',
+        ),
+
+    url(r'^comments/delete /(?P<pk>[0-9]+)/$',
+        views.CommentDelete.as_view(),
+        name='comment_delete',
         ),
 ]

@@ -3,25 +3,71 @@
 
 {% block content %}
 
-<h1>{{ question.title }}</h1>
-<p>{{ question.text }}</p>
-<p>{{ question.author }}</p>
+<div class="conteiner">
+  <div class="row">
+    <div class="col-sm-12">
+      <h1>{{ question.title }}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="text-justify">{{ question.text }}</p>
+    </div>
+  </div>
 
-<ul>
-  {% for comment in comments %}
-  <li>
-    <p>{{ comment.text }}</p>
-    <p>{{ comment.author }}</p>
-  </li>
-  {% endfor %}
+  <div class="row">
+    {% if user == question.author %}
+    <div class="small col-sm-2">
+      <a class="bg-info" href="{% url 'questions:update' question.pk %}">{% trans "Edit" %}</a>
+      <a class="bg-danger" href="{% url 'questions:delete' question.pk %}">{% trans "Delete" %}</a>
+    </div>
+    {% endif %}
+    <div class="col-sm-offset-11">
+      <p class="small">
+        <a href="{% url 'users:detail' question.author.username %}">
+          {{ question.author }}
+        </a>
+      </p>
+    </div>
+  <hr/>
+  </div>
 
-  <li>
-    <form action="{% url 'questions:add_comment' question.pk %}" method="POST">
-      {% csrf_token %}
-      {{ comment_form|crispy }}
-      <input type="submit" value="{% trans 'Add comment' %}" />
-    </form>
-  </li>
-</ul>
+  <div class="conteiner">
+    <ul class="list-unstyled">
+      {% for comment in comments %}
+      <li class="col-sm-11">
+        <p class="text-justify dark">{{ comment.text }}</p>
+        <div class="row">
+          {% if user == comment.author %}
+          <div class="small col-sm-2">
+            <a class="bg-info" href="{% url 'questions:comment_update' comment.pk %}">{% trans "Edit" %}</a>
+            <a class="bg-danger" href="{% url 'questions:comment_delete' comment.pk %}">{% trans "Delete" %}</a>
+          </div>
+          {% endif %}
+          <div class="col-md-offset-11">
+            <p class="small">
+            <a href="{% url 'users:detail' comment.author.username %}">
+              {{ comment.author }}
+            </a>
+            </p>
+          </div>
+        </div>
+      </li>
+      {% endfor %}
+
+      {% if user.is_authenticated %}
+      <div class="row">
+        <li class="col-sm-11">
+          <form action="{% url 'questions:add_comment' question.pk %}" method="POST">
+            {% csrf_token %}
+            <textarea class="col-sm-12" id="id_text" name="text"></textarea>
+            <input type="submit" class="col-sm-12 btn" value="{% trans 'Add comment' %}" />
+          </form>
+        </li>
+      </div>
+      {% endif %}
+    </ul>
+  </div>
+</div>
 
 {% endblock content %}

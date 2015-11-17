@@ -2,13 +2,20 @@
 
 {% block content %}
 
-<ul>
+<ul class="list-unstyled">
 {% for question in question_list %}
 <li>
-  <p>
-  <a href="{% url 'questions:details' question.pk %}">{{ question.title }}</a>
-  {{ question.text }}
-  </p>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">
+        <a href="{% url 'questions:details' question.pk %}">{{ question.title }}</a>
+      </h3>
+    </div>
+    <div class="panel-body">
+      {{ question.text }}
+    </div>
+    <hr/>
+  </div>
 </li>
 {% endfor %}
 </ul>

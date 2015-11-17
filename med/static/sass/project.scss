@@ -24,6 +24,12 @@ $red: #b94a48;
   color: $red;
 }
 
+div {
+    .dark {
+        background-color: #efefef;
+    }
+}
+
 // This is a fix for the bootstrap4 alpha release
 
 @media (max-width: 47.9em) {
