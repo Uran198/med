@@ -204,3 +204,7 @@ Bad guide - no automation :(
     $ service nginx restart
 
 20. Congradulate yourself!
+
+
+NOTE::
+    When you will need to change `Site` model make sure that new object has an id that's equal to SITE_ID in your settnigs(in my case 1)
