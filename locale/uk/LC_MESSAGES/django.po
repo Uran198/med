@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-16 23:19+0200\n"
+"POT-Creation-Date: 2015-11-17 03:32+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -21,19 +21,19 @@ msgstr ""
 
 #: config/settings/common.py:123
 msgid "Ukrainian"
-msgstr ""
+msgstr "Українська"
 
 #: config/settings/common.py:124
 msgid "English"
-msgstr ""
+msgstr "Англійська"
 
 #: med/templates/account/email.html:7
 msgid "Account"
-msgstr ""
+msgstr "Профіль"
 
 #: med/templates/account/email.html:13
 msgid "E-mail Addresses"
-msgstr ""
+msgstr "Е-мейл адреса"
 
 #: med/templates/account/email.html:15
 msgid "The following e-mail addresses are associated with your account:"
@@ -41,31 +41,31 @@ msgstr ""
 
 #: med/templates/account/email.html:29
 msgid "Verified"
-msgstr ""
+msgstr "Верифікована"
 
 #: med/templates/account/email.html:31
 msgid "Unverified"
-msgstr ""
+msgstr "Не верифікована"
 
 #: med/templates/account/email.html:33
 msgid "Primary"
-msgstr ""
+msgstr "Основна"
 
 #: med/templates/account/email.html:39
 msgid "Make Primary"
-msgstr ""
+msgstr "Зробити основною"
 
 #: med/templates/account/email.html:40
 msgid "Re-send Verification"
-msgstr ""
+msgstr "Ще раз вислати верифікаційний е-мейл"
 
 #: med/templates/account/email.html:41
 msgid "Remove"
-msgstr ""
+msgstr "Видалити"
 
 #: med/templates/account/email.html:48
 msgid "Warning:"
-msgstr ""
+msgstr "Обережно:"
 
 #: med/templates/account/email.html:48
 msgid ""
@@ -101,7 +101,7 @@ msgstr ""
 
 #: med/templates/account/email_confirm.html:24
 msgid "Confirm"
-msgstr ""
+msgstr "Підтвердити"
 
 #: med/templates/account/email_confirm.html:31
 #, python-format
@@ -133,20 +133,20 @@ msgstr ""
 
 #: med/templates/account/login.html:28
 msgid "or"
-msgstr ""
+msgstr "або"
 
 #: med/templates/account/login.html:43
 msgid "Forgot Password?"
-msgstr ""
+msgstr "Забули пароль?"
 
 #: med/templates/account/logout.html:6 med/templates/account/logout.html:13
 #: med/templates/account/logout.html:22
 msgid "Sign Out"
-msgstr ""
+msgstr "Вийти"
 
 #: med/templates/account/logout.html:15
 msgid "Are you sure you want to sign out?"
-msgstr ""
+msgstr "Ви впевнені, що хочете вийти?"
 
 #: med/templates/account/password_change.html:5
 #: med/templates/account/password_change.html:11
@@ -156,7 +156,7 @@ msgstr ""
 #: med/templates/account/password_reset_from_key_done.html:5
 #: med/templates/account/password_reset_from_key_done.html:11
 msgid "Change Password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: med/templates/account/password_reset.html:7
 #: med/templates/account/password_reset.html:14
@@ -199,27 +199,27 @@ msgstr ""
 
 #: med/templates/account/password_reset_from_key.html:23
 msgid "change password"
-msgstr ""
+msgstr "Змінити пароль"
 
 #: med/templates/account/password_reset_from_key.html:26
 #: med/templates/account/password_reset_from_key_done.html:12
 msgid "Your password is now changed."
-msgstr ""
+msgstr "Ваш пароль змінився"
 
 #: med/templates/account/password_set.html:6
 #: med/templates/account/password_set.html:12
 #: med/templates/account/password_set.html:17
 msgid "Set Password"
-msgstr ""
+msgstr "Поставити пароль"
 
 #: med/templates/account/signup.html:7
 msgid "Signup"
-msgstr ""
+msgstr "Зареєструватися"
 
 #: med/templates/account/signup.html:14 med/templates/account/signup.html:24
-#: med/templates/base.html:74
+#: med/templates/base.html:77
 msgid "Sign Up"
-msgstr ""
+msgstr "Зареєструватися"
 
 #: med/templates/account/signup.html:16
 #, python-format
@@ -274,31 +274,65 @@ msgstr ""
 
 #: med/templates/base.html:53 med/templates/questions/question_form.html:9
 msgid "Ask question"
-msgstr ""
+msgstr "Задати питання"
 
 #: med/templates/base.html:56
 msgid "Questions"
-msgstr ""
+msgstr "Список питань"
 
 #: med/templates/base.html:60
 msgid "About"
 msgstr "Що це?"
 
 #: med/templates/base.html:67
+msgid "Users"
+msgstr "Користувачі"
+
+#: med/templates/base.html:70
 msgid "My Profile"
 msgstr "Мій профіль"
 
-#: med/templates/base.html:70
+#: med/templates/base.html:73
 msgid "Logout"
 msgstr "Вийти"
 
-#: med/templates/base.html:77
+#: med/templates/base.html:80
 msgid "Log In"
 msgstr "Увійти"
 
+#: med/templates/base.html:115
+msgid "Still in testing"
+msgstr "Проводиться тестування і допрацювання"
+
+#: med/templates/questions/comment_confirm_delete.html:9
+#: med/templates/questions/comment_confirm_delete.html:15
+#: med/templates/questions/question_confirm_delete.html:9
+#: med/templates/questions/question_confirm_delete.html:15
 #: med/templates/questions/question_detail.html:22
+#: med/templates/questions/question_detail.html:44
+msgid "Delete"
+msgstr "Видалити"
+
+#: med/templates/questions/comment_confirm_delete.html:11
+msgid "Are you sure you want to delete this comment?"
+msgstr "Ви впевнені, що хочете видалити цей коментар?"
+
+#: med/templates/questions/comment_form.html:9
+msgid "Update comment"
+msgstr "Оновити коментар"
+
+#: med/templates/questions/question_confirm_delete.html:11
+msgid "Are you sure you want to delete this question?"
+msgstr "Ви впевнені, що хочете видалити це питання?"
+
+#: med/templates/questions/question_detail.html:21
+#: med/templates/questions/question_detail.html:43
+msgid "Edit"
+msgstr "Редагувати"
+
+#: med/templates/questions/question_detail.html:64
 msgid "Add comment"
-msgstr ""
+msgstr "Прокоментувати"
 
 #: med/users/models.py:16
 msgid "Name of User"
