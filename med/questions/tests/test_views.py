@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
 
 from django.contrib.auth.models import AnonymousUser
@@ -101,6 +102,13 @@ class QuestionDeleteTest(TestCase):
         request.user = self.bob
         response = self.view(request, pk=self.question.pk)
         self.assertNotEqual(response.status_code, 200)
+
+    def test_success_delete(self):
+        request = self.factory.post('fake/')
+        request.user = self.alice
+        response = self.view(request, pk=self.question.pk)
+        self.assertEqual(response['Location'], reverse('questions:list'))
+        self.assertEquals(len(Question.objects.all()), 0)
 
 
 class QuestionDetailsTest(TestCase):

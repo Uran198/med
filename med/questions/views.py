@@ -1,4 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
@@ -31,6 +32,9 @@ class QuestionDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def test_func(self, user):
         return self.get_object().author == user
+
+    def get_success_url(self):
+        return reverse('questions:list')
 
 
 class QuestionDetails(DetailView):
