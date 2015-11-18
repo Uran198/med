@@ -1,3 +1,5 @@
+from django.utils import translation
+
 from test_plus.test import TestCase
 
 
@@ -5,6 +7,7 @@ class TestUser(TestCase):
 
     def setUp(self):
         self.user = self.make_user()
+        self.prefix = "/" + translation.get_language()
 
     def test__str__(self):
         self.assertEqual(
@@ -15,5 +18,5 @@ class TestUser(TestCase):
     def test_get_absolute_url(self):
         self.assertEqual(
             self.user.get_absolute_url(),
-            '/users/testuser/'
+            self.prefix + '/users/testuser/'
         )

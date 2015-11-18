@@ -1,4 +1,5 @@
 from django.test import RequestFactory
+from django.utils import translation
 
 from test_plus.test import TestCase
 
@@ -13,6 +14,7 @@ class BaseUserTestCase(TestCase):
     def setUp(self):
         self.user = self.make_user()
         self.factory = RequestFactory()
+        self.prefix = "/" + translation.get_language()
 
 
 class TestUserRedirectView(BaseUserTestCase):
@@ -30,7 +32,7 @@ class TestUserRedirectView(BaseUserTestCase):
         #   self.make_user()
         self.assertEqual(
             view.get_redirect_url(),
-            '/users/testuser/'
+            self.prefix + '/users/testuser/'
         )
 
 
@@ -53,7 +55,7 @@ class TestUserUpdateView(BaseUserTestCase):
         #   self.make_user()
         self.assertEqual(
             self.view.get_success_url(),
-            '/users/testuser/'
+            self.prefix + '/users/testuser/'
         )
 
     def test_get_object(self):
