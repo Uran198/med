@@ -13,6 +13,10 @@
       {% if object.name %}
         <p>{{ object.name }}</p>
       {% endif %}
+
+      {% if object.avatar %}
+      <img src="{{ object.avatar.url }}" \>
+      {% endif %}
     </div>
   </div>
 
