@@ -30,6 +30,8 @@ class User(AbstractUser):
     def get_absolute_url(self):
         return reverse('users:detail', kwargs={'username': self.username})
 
+    # TODO:
+    # remove images from filesystem once they are no longer needed
     def save(self, *args, **kwargs):
         if self.avatar:
             image = Image.open(self.avatar.file)
