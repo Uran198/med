@@ -31,10 +31,6 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     # we already imported User in the view code above, remember?
     model = User
 
-    def form_valid(self, form, *args, **kwargs):
-        print(form.instance.avatar)
-        return super().form_valid(form, *args, **kwargs)
-
     # send the user back to their own page after a successful update
     def get_success_url(self):
         return reverse("users:detail",
