@@ -1,5 +1,11 @@
 {% extends "base.html" %}
-{% load i18n crispy_forms_tags %}
+{% load i18n crispy_forms_tags static %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script type="text/javascript" src="{% static 'js/editor.js' %}"></script>
+{% endblock javascript %}
 
 {% block content %}
 
