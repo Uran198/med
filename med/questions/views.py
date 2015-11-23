@@ -1,16 +1,25 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseBadRequest
+from django.core.files.storage import get_storage_class
+from django.http import HttpResponseBadRequest, JsonResponse
 from django.views.generic import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.forms import modelform_factory
 
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Question, Comment
+from .forms import UploadImageForm
 
 
-class CreateQuestion(LoginRequiredMixin, CreateView):
+class UploadImageMixin(object):
+    def get_context_data(self, *args, **kwargs):
+        context_data = super(UploadImageMixin, self).get_context_data(*args, **kwargs)
+        context_data['image_form'] = UploadImageForm()
+        return context_data
+
+
+class CreateQuestion(LoginRequiredMixin, UploadImageMixin, CreateView):
     model = Question
     fields = ('title', 'text')
 
@@ -19,7 +28,7 @@ class CreateQuestion(LoginRequiredMixin, CreateView):
         return super(CreateQuestion, self).form_valid(form, *args, **kwargs)
 
 
-class QuestionUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class QuestionUpdate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, UpdateView):
     model = Question
     fields = ('title', 'text')
 
@@ -102,3 +111,20 @@ class CommentDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         # Strange: it's no lpnger in database, but it is here, and can access
         # foreighn keys
         return self.get_object().get_absolute_url()
+
+
+class UploadImage(LoginRequiredMixin, View):
+    def post(self, request):
+        response = {}
+        form = UploadImageForm(request.POST, request.FILES)
+        storage = get_storage_class()()
+        if form.is_valid():
+            f = request.FILES['file']
+            filename = storage.get_available_name(f.name)
+            with storage.open(filename, 'wb') as dest:
+                for chunk in f.chunks():
+                    dest.write(chunk)
+            response['location'] = storage.url(filename)
+        else:
+            response['error'] = form.errors
+        return JsonResponse(response)
