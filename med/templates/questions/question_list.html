@@ -11,9 +11,11 @@
         <a href="{% url 'questions:details' question.pk %}">{{ question.title }}</a>
       </h3>
     </div>
+    {% comment %}
     <div class="panel-body">
       {{ question.text }}
     </div>
+    {% endcomment %}
     <hr/>
   </div>
 </li>
