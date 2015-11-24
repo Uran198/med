@@ -1,15 +1,13 @@
 /* Project specific Javascript goes here. */
 $(document).ready(function() {
     console.log("ready!");
-    $("#upload_image").on('submit', function(e) {
+    $("#upload_image_form").on('submit', function(e) {
         e.preventDefault();
         console.log("Submitted!");
         file = e.target.file;
         data = new FormData(e.target);
         $.ajax({
-            // Probably not very good to hardcode it, maybe should use templates somehow
-            // FIXME: THIS IS REALLY BAD
-            url: '/en/questions/upload_image/',
+            url: e.target.action,
             type: 'POST',
             data: data,
             cache: false,
@@ -19,7 +17,11 @@ $(document).ready(function() {
             success: function(data) {
                 console.log("Success");
                 console.log(arguments);
-                $('#id_text_ifr').contents().find('body').append('<img src="'+data['location']+'" />');
+                if (data['location']) {
+                    $('#id_text_ifr').contents().find('body').append('<img src="'+data['location']+'" />');
+                } else {
+                    console.log(data['error']);
+                }
             },
             error: function() {
                 console.log("Error");

@@ -48,6 +48,7 @@ LOCAL_APPS = (
     'med.users',  # custom users app
     # Your stuff: custom apps go here
     'med.questions',
+    'med.api',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

@@ -9,10 +9,10 @@
 
 {% block content %}
 
-<form id="upload_image" method="POST" action="{% url 'questions:upload_image' %}" enctype="multipart/form-data">
+<form id="upload_image_form" method="POST" action="{% url 'api:upload_image' %}" enctype="multipart/form-data">
   {% csrf_token %}
   {{ image_form|crispy }}
-  <input type="submit" value="Upload Image.."/>
+  <input type="submit" value="{% trans 'Add Image..' %}"/>
 </form>
 
 <form method="POST" action="">

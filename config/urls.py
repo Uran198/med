@@ -25,9 +25,14 @@ urlpatterns += i18n_patterns(
     url(r'^users/', include("med.users.urls", namespace="users")),
     url(r'^accounts/', include('allauth.urls')),
 
-    # Your stuff: custom urls includes go here
+    # Your stuff: custom urls with internationalization includes go here
     url(r'^questions/', include('med.questions.urls', namespace='questions')),
 )
+
+urlpatterns += [
+    # Need no internationalization
+    url(r'api/', include('med.api.urls', namespace='api')),
+]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

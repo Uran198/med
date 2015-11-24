@@ -49,11 +49,4 @@ urlpatterns = [
         views.CommentDelete.as_view(),
         name='comment_delete',
         ),
-
-    # Image upload
-
-    url(r'^upload_image/$',
-        views.UploadImage.as_view(),
-        name='upload_image',
-        ),
 ]
