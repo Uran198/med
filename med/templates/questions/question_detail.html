@@ -23,15 +23,21 @@
       <a class="bg-danger" href="{% url 'questions:delete' question.pk %}">{% trans "Delete" %}</a>
     </div>
     {% endif %}
-    <div class="col-sm-offset-11">
+    <div class="col-sm-offset-4 col-sm-3">
       <p class="small">
+        Last edited {{ question.update_date }}
+      </p>
+    </div>
+    <div class="col-sm-offset-0 col-sm-3">
+      <p class="small">
+        Asked {{ question.pub_date }} by
         <a href="{% url 'users:detail' question.author.username %}">
           {{ question.author }}
         </a>
       </p>
     </div>
-  <hr/>
   </div>
+  <hr/>
 
   <div class="conteiner">
     <ul class="list-unstyled">
@@ -45,8 +51,14 @@
             <a class="bg-danger" href="{% url 'questions:comment_delete' comment.pk %}">{% trans "Delete" %}</a>
           </div>
           {% endif %}
-          <div class="col-md-offset-11">
+          <div class="col-sm-offset-4 col-sm-3">
             <p class="small">
+            Last edited {{ comment.update_date }}
+            </p>
+          </div>
+          <div class="col-sm-offset-0 col-sm-3">
+            <p class="small">
+            Asked {{ comment.pub_date }} by
             <a href="{% url 'users:detail' comment.author.username %}">
               {{ comment.author }}
             </a>
