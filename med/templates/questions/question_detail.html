@@ -18,7 +18,8 @@
 
   <div class="row">
     {% if user == question.author %}
-    <div class="small col-sm-2">
+    <div class="small col-sm-3">
+      <a class="bg-info" href="{% url 'questions:revision_list' question.pk %}">{% trans "List of revisions" %}</a>
       <a class="bg-info" href="{% url 'questions:update' question.pk %}">{% trans "Edit" %}</a>
       <a class="bg-danger" href="{% url 'questions:delete' question.pk %}">{% trans "Delete" %}</a>
     </div>

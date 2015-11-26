@@ -298,3 +298,30 @@ class UploadImageMixinText(TestCase):
 
     def test_get_context_data(self):
         self.assertNotEqual(self.response.context_data.get('image_form'), None)
+
+
+class RevisionListTest(TestCase):
+
+    def setUp(self):
+        self.skipTest(reason="middleware is disable, don't know how to test")
+
+        self.user = User.objects.create_user("john")
+        self.question = Question.objects.create(
+            title="Title",
+            text="Text",
+            author=self.user,
+        )
+        self.view = views.RevisionList.as_view()
+        self.factory = RequestFactory()
+        self.request = self.factory.get('/fake')
+        self.request.user = AnonymousUser()
+
+    def test_get_context_data(self):
+        response = self.view(self.request, question_pk=self.question.pk)
+        self.assertEqual(len(response.context_data['revision_list']), 0)
+
+    def test_get_context_data_revisions_1(self):
+        self.question.text = "New text!"
+        self.question.save()
+        response = self.view(self.request, question_pk=self.question.pk)
+        self.assertEqual(len(response.context_data['revision_list']), 1)

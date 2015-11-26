@@ -49,4 +49,11 @@ urlpatterns = [
         views.CommentDelete.as_view(),
         name='comment_delete',
         ),
+
+    # Revisions
+
+    url(r'^revisions/(?P<question_pk>[0-9]+)/$',
+        views.RevisionList.as_view(),
+        name='revision_list',
+        ),
 ]

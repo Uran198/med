@@ -2,10 +2,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
 from django.views.generic import (
-    CreateView, UpdateView, DeleteView, DetailView, ListView)
+    CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView)
 from django.forms import modelform_factory
 
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
+import reversion as revisions
 
 from .models import Question, Comment
 from .forms import UploadImageForm
@@ -110,3 +111,13 @@ class CommentDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         # Strange: it's no longer in database, but it is here, and can access
         # foreighn keys
         return self.get_object().get_absolute_url()
+
+
+class RevisionList(TemplateView):
+    template_name = "questions/revision_list.html"
+
+    def get_context_data(self, **kwargs):
+        obj = get_object_or_404(Question, pk=kwargs.get('question_pk'))
+        context_data = super(RevisionList, self).get_context_data()
+        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
+        return context_data
