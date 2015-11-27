@@ -9,6 +9,9 @@ from med.questions.forms import UploadImageForm
 class UploadImage(LoginRequiredMixin, View):
     def post(self, request):
         response = {}
+        # TODO: reject too big files (protection against DOS)
+        # It's strange to use forms here, maybe this method should live in
+        # questions app or form should live in this one
         form = UploadImageForm(request.POST, request.FILES)
         storage = get_storage_class()()
         if form.is_valid():
