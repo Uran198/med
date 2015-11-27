@@ -18,7 +18,8 @@ $(document).ready(function() {
                 console.log("Success");
                 console.log(arguments);
                 if (data['location']) {
-                    $('#id_text_ifr').contents().find('body').append('<img src="'+data['location']+'" />');
+                    $('#id_text_ifr').contents().find('body').append(
+                            '<img width="400" height="400" src="'+data['location']+'" />');
                 } else {
                     console.log(data['error']);
                 }
