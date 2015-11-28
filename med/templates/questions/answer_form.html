@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n crispy_forms_tags staticfiles %}
+
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="//tinymce.cachefly.net/4.2/tinymce.min.js"></script>
+<script type="text/javascript" src="{% static 'js/editor.js' %}"></script>
+{% endblock javascript %}
+
+{% block content %}
+
+<form id="upload_image_form" method="POST" action="{% url 'api:upload_image' %}" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ image_form|crispy }}
+  <input type="submit" value="{% trans 'Add Image..' %}"/>
+</form>
+
+<form method="POST" action="">
+  {% csrf_token %}
+  {{ form|crispy }}
+  <input type="submit" value="{% trans 'Ask answer' %}"/>
+</form>
+
+{% endblock content %}

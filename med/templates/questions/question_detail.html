@@ -81,6 +81,51 @@
       </div>
       {% endif %}
     </ul>
+
+      {# ANSWERS SECTION #}
+      <hr/>
+      <div class="row">
+        <div class="col-sm-10">
+          <h2>Answers</h2>
+        </div>
+      </div>
+
+      {% for answer in answers %}
+      <div class="row">
+        <div class="col-sm-12">
+          {# The hope is that tinyMCE will make proper sanitization #}
+          <p class="text-justify">{{ answer.text|safe }}</p>
+        </div>
+      </div>
+
+      <div class="row">
+        {% if user == answer.author %}
+        <div class="small col-sm-3">
+          {% comment %}
+          <a class="bg-info" href="{% url 'questions:revision_list' question.pk %}">{% trans "List of revisions" %}</a>
+          {% endcomment %}
+          <a class="bg-info" href="{% url 'questions:answer_update' answer.pk %}">{% trans "Edit" %}</a>
+          <a class="bg-danger" href="{% url 'questions:answer_delete' answer.pk %}">{% trans "Delete" %}</a>
+        </div>
+        {% endif %}
+        <div class="col-sm-offset-3 col-sm-3">
+          <p class="small">
+          Last edited {{ answer.update_date }}
+          </p>
+        </div>
+        <div class="col-sm-offset-0 col-sm-3">
+          <p class="small">
+          Answered {{ answer.pub_date }} by
+          <a href="{% url 'users:detail' question.author.username %}">
+            {{ answer.author }}
+          </a>
+          </p>
+        </div>
+      </div>
+      <hr/>
+      {% endfor %}
+
+      <a class="btn btn-primary" href="{% url 'questions:add_answer' question.pk %}">{% trans "Add Answer" %}</a>
   </div>
 </div>
 

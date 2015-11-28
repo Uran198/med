@@ -33,22 +33,54 @@ urlpatterns = [
         name='list',
         ),
 
+    url(r'^answers/create/(?P<parent_id>[0-9]+)/$',
+        views.AnswerCreate.as_view(),
+        name='add_answer',
+        ),
+
+    url(r'^answers/update/(?P<pk>[0-9]+)/$',
+        views.AnswerUpdate.as_view(),
+        name='answer_update',
+        ),
+
+
+    url(r'^answers/delete/(?P<pk>[0-9]+)/$',
+        views.AnswerDelete.as_view(),
+        name='answer_delete',
+        ),
+
+
     # Comments
 
-    url(r'^comments/create/(?P<parent_id>[0-9]+)/$',
-        views.CommentCreate.as_view(),
+    url(r'^comments/questions/create/(?P<parent_id>[0-9]+)/$',
+        views.QuestionCommentCreate.as_view(),
         name='add_comment',
         ),
 
-    url(r'^comments/update/(?P<pk>[0-9]+)/$',
-        views.CommentUpdate.as_view(),
+    url(r'^comments/questions/update/(?P<pk>[0-9]+)/$',
+        views.QuestionCommentUpdate.as_view(),
         name='comment_update',
         ),
 
-    url(r'^comments/delete /(?P<pk>[0-9]+)/$',
-        views.CommentDelete.as_view(),
+    url(r'^comments/questions/delete/(?P<pk>[0-9]+)/$',
+        views.QuestionCommentDelete.as_view(),
         name='comment_delete',
         ),
+
+#    url(r'^comments/answers/create/(?P<parent_id>[0-9]+)/$',
+#        views.AnswerCommentCreate.as_view(),
+#        name='add_answer_comment',
+#        ),
+#
+#    url(r'^comments/answers/update/(?P<pk>[0-9]+)/$',
+#        views.AnswerCommentUpdate.as_view(),
+#        name='answer_comment_update',
+#        ),
+#
+#    url(r'^comments/answers/delete/(?P<pk>[0-9]+)/$',
+#        views.AnswerCommentDelete.as_view(),
+#        name='answer_comment_delete',
+#        ),
 
     # Revisions
 

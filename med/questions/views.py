@@ -8,7 +8,7 @@ from django.forms import modelform_factory
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 import reversion as revisions
 
-from .models import Question, QuestionComment
+from .models import Question, QuestionComment, Answer
 from .forms import UploadImageForm
 
 
@@ -53,8 +53,9 @@ class QuestionDetails(DetailView):
         context_data = super(QuestionDetails, self).get_context_data()
         context_data['comments'] = self.object.comment_set.all()
         # TODO: This must be wrong!
-        context_data['comment_form'] = modelform_factory(CommentCreate.model,
-                                                         fields=CommentCreate.fields)()
+        context_data['comment_form'] = modelform_factory(QuestionCommentCreate.model,
+                                                         fields=QuestionCommentCreate.fields)()
+        context_data['answers'] = self.object.answer_set.prefetch_related('comment_set')
         return context_data
 
     def dispatch(self, *args, **kwargs):
@@ -69,13 +70,57 @@ class QuestionList(ListView):
     model = Question
 
 
+class RevisionList(TemplateView):
+    template_name = "questions/revision_list.html"
+
+    def get_context_data(self, **kwargs):
+        obj = get_object_or_404(Question, pk=kwargs.get('question_pk'))
+        context_data = super(RevisionList, self).get_context_data()
+        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
+        return context_data
+
+
+class AnswerCreate(LoginRequiredMixin, UploadImageMixin, CreateView):
+    model = Answer
+    fields = ('text',)
+
+    def post(self, *args, **kwargs):
+        self.question = get_object_or_404(Question, pk=kwargs['parent_id'])
+        return super(AnswerCreate, self).post(*args, **kwargs)
+
+    def form_valid(self, form):
+        form.instance.question = self.question
+        form.instance.author = self.request.user
+        return super(AnswerCreate, self).form_valid(form)
+
+
+class AnswerUpdate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, UpdateView):
+    model = Answer
+    fields = ('text',)
+
+    def test_func(self, user):
+        return self.get_object().author == user
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
+
+
+class AnswerDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Answer
+
+    def test_func(self, user):
+        return self.get_object().author == user
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()
+
+
 class CommentCreate(LoginRequiredMixin, CreateView):
-    model = QuestionComment
     http_method_names = [u'post']
     fields = ('text',)
 
     def post(self, *args, **kwargs):
-        self.parent = get_object_or_404(Question, pk=kwargs['parent_id'])
+        self.parent = get_object_or_404(self.parent_model, pk=kwargs['parent_id'])
         return super(CommentCreate, self).post(*args, **kwargs)
 
     def form_valid(self, form):
@@ -91,7 +136,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
 
 
 class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = QuestionComment
+    template_name = 'questions/comment_form.html'
     fields = ('text',)
 
     def test_func(self, user):
@@ -102,22 +147,23 @@ class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 class CommentDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = QuestionComment
+    template_name = 'questions/comment_confirm_delete.html'
 
     def test_func(self, user):
         return self.get_object().author == user
 
     def get_success_url(self):
-        # Strange: it's no longer in database, but it is here, and can access
-        # foreighn keys
         return self.get_object().get_absolute_url()
 
 
-class RevisionList(TemplateView):
-    template_name = "questions/revision_list.html"
+class QuestionCommentCreate(CommentCreate):
+    parent_model = Question
+    model = QuestionComment
 
-    def get_context_data(self, **kwargs):
-        obj = get_object_or_404(Question, pk=kwargs.get('question_pk'))
-        context_data = super(RevisionList, self).get_context_data()
-        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
-        return context_data
+
+class QuestionCommentUpdate(CommentUpdate):
+    model = QuestionComment
+
+
+class QuestionCommentDelete(CommentDelete):
+    model = QuestionComment
