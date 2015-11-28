@@ -23,10 +23,24 @@ class Question(models.Model):
         return reverse('questions:details', kwargs={'pk': self.id})
 
 
+@revisions.register
+class Answer(models.Model):
+    author = models.ForeignKey(User)
+    question = models.ForeignKey(Question)
+    text = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+
+    def get_absolute_url(self):
+        return self.question.get_absolute_url()
+
+    def __str__(self):
+        return self.text
+
+
 class Comment(models.Model):
     author = models.ForeignKey(User)
     text = models.TextField()
-    parent = models.ForeignKey(Question)
     pub_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
@@ -35,3 +49,14 @@ class Comment(models.Model):
 
     def get_absolute_url(self):
         return self.parent.get_absolute_url()
+
+    class Meta:
+        abstract = True
+
+
+class QuestionComment(Comment):
+    parent = models.ForeignKey(Question, related_name='comment_set')
+
+
+class AnswerComment(models.Model):
+    parent = models.ForeignKey(Answer, related_name='comment_set')

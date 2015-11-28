@@ -8,7 +8,7 @@ from django.forms import modelform_factory
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 import reversion as revisions
 
-from .models import Question, Comment
+from .models import Question, QuestionComment
 from .forms import UploadImageForm
 
 
@@ -70,7 +70,7 @@ class QuestionList(ListView):
 
 
 class CommentCreate(LoginRequiredMixin, CreateView):
-    model = Comment
+    model = QuestionComment
     http_method_names = [u'post']
     fields = ('text',)
 
@@ -91,7 +91,7 @@ class CommentCreate(LoginRequiredMixin, CreateView):
 
 
 class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    model = Comment
+    model = QuestionComment
     fields = ('text',)
 
     def test_func(self, user):
@@ -102,7 +102,7 @@ class CommentUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 
 class CommentDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Comment
+    model = QuestionComment
 
     def test_func(self, user):
         return self.get_object().author == user
