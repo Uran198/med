@@ -43,7 +43,7 @@
   <div class="conteiner">
     <ul class="list-unstyled">
       {% for comment in comments %}
-      <li class="col-sm-11">
+      <li class="col-sm-7 col-sm-offset-1">
         <p class="text-justify dark">{{ comment.text }}</p>
         <div class="row">
           {% if user == comment.author %}
@@ -71,61 +71,107 @@
 
       {% if user.is_authenticated %}
       <div class="row">
-        <li class="col-sm-11">
+        <li>
           <form action="{% url 'questions:add_comment' question.pk %}" method="POST">
             {% csrf_token %}
-            <textarea class="col-sm-12" id="id_text" name="text"></textarea>
-            <input type="submit" class="col-sm-12 btn" value="{% trans 'Add comment' %}" />
+            <div class="col-sm-7 col-sm-offset-1">
+              <textarea class="col-sm-12" id="id_text" name="text"></textarea>
+            </div>
+            <input type="submit" class="col-sm-2 btn" value="{% trans 'Add comment' %}" />
           </form>
         </li>
       </div>
       {% endif %}
     </ul>
 
-      {# ANSWERS SECTION #}
-      <hr/>
-      <div class="row">
-        <div class="col-sm-10">
-          <h2>Answers</h2>
-        </div>
+    {# ANSWERS SECTION #}
+    <hr/>
+    <div class="row">
+      <div class="col-sm-10">
+        <h2>Answers</h2>
       </div>
+    </div>
 
-      {% for answer in answers %}
-      <div class="row">
-        <div class="col-sm-12">
-          {# The hope is that tinyMCE will make proper sanitization #}
-          <p class="text-justify">{{ answer.text|safe }}</p>
-        </div>
+    {% for answer in answers %}
+    <div class="row">
+      <div class="col-sm-12">
+        {# The hope is that tinyMCE will make proper sanitization #}
+        <p class="text-justify">{{ answer.text|safe }}</p>
       </div>
+    </div>
 
-      <div class="row">
-        {% if user == answer.author %}
-        <div class="small col-sm-3">
-          {% comment %}
-          <a class="bg-info" href="{% url 'questions:revision_list' question.pk %}">{% trans "List of revisions" %}</a>
-          {% endcomment %}
-          <a class="bg-info" href="{% url 'questions:answer_update' answer.pk %}">{% trans "Edit" %}</a>
-          <a class="bg-danger" href="{% url 'questions:answer_delete' answer.pk %}">{% trans "Delete" %}</a>
+    <div class="row">
+      {% if user == answer.author %}
+      <div class="small col-sm-3">
+        <a class="bg-info" href="{% url 'questions:answer_revision_list' answer.pk %}">{% trans "List of revisions" %}</a>
+        <a class="bg-info" href="{% url 'questions:answer_update' answer.pk %}">{% trans "Edit" %}</a>
+        <a class="bg-danger" href="{% url 'questions:answer_delete' answer.pk %}">{% trans "Delete" %}</a>
+      </div>
+      {% endif %}
+      <div class="col-sm-offset-3 col-sm-3">
+        <p class="small">
+        Last edited {{ answer.update_date }}
+        </p>
+      </div>
+      <div class="col-sm-offset-0 col-sm-3">
+        <p class="small">
+        Answered {{ answer.pub_date }} by
+        <a href="{% url 'users:detail' question.author.username %}">
+          {{ answer.author }}
+        </a>
+        </p>
+      </div>
+    </div>
+    <hr/>
+    <div class="conteiner">
+      <ul class="list-unstyled">
+        {% for comment in answer.comment_set.all %}
+        <li class="col-sm-7 col-sm-offset-1">
+          <p class="text-justify dark">{{ comment.text }}</p>
+          <div class="row">
+            {% if user == comment.author %}
+            <div class="small col-sm-2">
+              <a class="bg-info" href="{% url 'questions:answer_comment_update' comment.pk %}">{% trans "Edit" %}</a>
+              <a class="bg-danger" href="{% url 'questions:answer_comment_delete' comment.pk %}">{% trans "Delete" %}</a>
+            </div>
+            {% endif %}
+            <div class="col-sm-offset-4 col-sm-3">
+              <p class="small">
+              Last edited {{ comment.update_date }}
+              </p>
+            </div>
+            <div class="col-sm-offset-0 col-sm-3">
+              <p class="small">
+              Asked {{ comment.pub_date }} by
+              <a href="{% url 'users:detail' comment.author.username %}">
+                {{ comment.author }}
+              </a>
+              </p>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+
+        {% if user.is_authenticated %}
+        <div class="row">
+          <li>
+            <form action="{% url 'questions:add_answer_comment' answer.pk %}" method="POST">
+              {% csrf_token %}
+              <div class="col-sm-7 col-sm-offset-1">
+                <textarea class="col-sm-12" id="id_text" name="text"></textarea>
+              </div>
+              <input type="submit" class="col-sm-2 btn" value="{% trans 'Add comment' %}" />
+            </form>
+          </li>
         </div>
         {% endif %}
-        <div class="col-sm-offset-3 col-sm-3">
-          <p class="small">
-          Last edited {{ answer.update_date }}
-          </p>
-        </div>
-        <div class="col-sm-offset-0 col-sm-3">
-          <p class="small">
-          Answered {{ answer.pub_date }} by
-          <a href="{% url 'users:detail' question.author.username %}">
-            {{ answer.author }}
-          </a>
-          </p>
-        </div>
-      </div>
-      <hr/>
-      {% endfor %}
+      </ul>
+    </div>
+    <hr/>
+    <hr/>
+    {% endfor %}
 
-      <a class="btn btn-primary" href="{% url 'questions:add_answer' question.pk %}">{% trans "Add Answer" %}</a>
+    <a class="btn btn-primary" href="{% url 'questions:add_answer' question.pk %}">{% trans "Add Answer" %}</a>
   </div>
 </div>
 

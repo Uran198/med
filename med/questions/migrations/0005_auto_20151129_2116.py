@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Answer',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('text', models.TextField()),
                 ('pub_date', models.DateTimeField(auto_now_add=True)),
                 ('update_date', models.DateTimeField(auto_now=True)),
@@ -27,19 +27,26 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='AnswerComment',
             fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
-                ('parent', models.ForeignKey(to='questions.Answer')),
-            ],
-        ),
-        migrations.CreateModel(
-            name='QuestionComment',
-            fields=[
-                ('id', models.AutoField(verbose_name='ID', serialize=False, primary_key=True, auto_created=True)),
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
                 ('text', models.TextField()),
                 ('pub_date', models.DateTimeField(auto_now_add=True)),
                 ('update_date', models.DateTimeField(auto_now=True)),
                 ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(to='questions.Question')),
+                ('parent', models.ForeignKey(to='questions.Answer', related_name='comment_set')),
+            ],
+            options={
+                'abstract': False,
+            },
+        ),
+        migrations.CreateModel(
+            name='QuestionComment',
+            fields=[
+                ('id', models.AutoField(auto_created=True, primary_key=True, verbose_name='ID', serialize=False)),
+                ('text', models.TextField()),
+                ('pub_date', models.DateTimeField(auto_now_add=True)),
+                ('update_date', models.DateTimeField(auto_now=True)),
+                ('author', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('parent', models.ForeignKey(to='questions.Question', related_name='comment_set')),
             ],
             options={
                 'abstract': False,

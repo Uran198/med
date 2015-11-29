@@ -67,25 +67,30 @@ urlpatterns = [
         name='comment_delete',
         ),
 
-#    url(r'^comments/answers/create/(?P<parent_id>[0-9]+)/$',
-#        views.AnswerCommentCreate.as_view(),
-#        name='add_answer_comment',
-#        ),
-#
-#    url(r'^comments/answers/update/(?P<pk>[0-9]+)/$',
-#        views.AnswerCommentUpdate.as_view(),
-#        name='answer_comment_update',
-#        ),
-#
-#    url(r'^comments/answers/delete/(?P<pk>[0-9]+)/$',
-#        views.AnswerCommentDelete.as_view(),
-#        name='answer_comment_delete',
-#        ),
+    url(r'^comments/answers/create/(?P<parent_id>[0-9]+)/$',
+        views.AnswerCommentCreate.as_view(),
+        name='add_answer_comment',
+        ),
+
+    url(r'^comments/answers/update/(?P<pk>[0-9]+)/$',
+        views.AnswerCommentUpdate.as_view(),
+        name='answer_comment_update',
+        ),
+
+    url(r'^comments/answers/delete/(?P<pk>[0-9]+)/$',
+        views.AnswerCommentDelete.as_view(),
+        name='answer_comment_delete',
+        ),
 
     # Revisions
 
     url(r'^revisions/(?P<question_pk>[0-9]+)/$',
         views.RevisionList.as_view(),
         name='revision_list',
+        ),
+
+    url(r'^arevisions/(?P<answer_pk>[0-9]+)/$',
+        views.AnswerRevisionList.as_view(),
+        name='answer_revision_list',
         ),
 ]

@@ -58,5 +58,5 @@ class QuestionComment(Comment):
     parent = models.ForeignKey(Question, related_name='comment_set')
 
 
-class AnswerComment(models.Model):
+class AnswerComment(Comment):
     parent = models.ForeignKey(Answer, related_name='comment_set')

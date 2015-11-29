@@ -3,12 +3,11 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseBadRequest
 from django.views.generic import (
     CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView)
-from django.forms import modelform_factory
 
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 import reversion as revisions
 
-from .models import Question, QuestionComment, Answer
+from .models import Question, QuestionComment, Answer, AnswerComment
 from .forms import UploadImageForm
 
 
@@ -52,10 +51,7 @@ class QuestionDetails(DetailView):
     def get_context_data(self, *args, **kwargs):
         context_data = super(QuestionDetails, self).get_context_data()
         context_data['comments'] = self.object.comment_set.all()
-        # TODO: This must be wrong!
-        context_data['comment_form'] = modelform_factory(QuestionCommentCreate.model,
-                                                         fields=QuestionCommentCreate.fields)()
-        context_data['answers'] = self.object.answer_set.prefetch_related('comment_set')
+        context_data['answers'] = self.object.answer_set.prefetch_related('comment_set').all()
         return context_data
 
     def dispatch(self, *args, **kwargs):
@@ -76,6 +72,16 @@ class RevisionList(TemplateView):
     def get_context_data(self, **kwargs):
         obj = get_object_or_404(Question, pk=kwargs.get('question_pk'))
         context_data = super(RevisionList, self).get_context_data()
+        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
+        return context_data
+
+
+class AnswerRevisionList(TemplateView):
+    template_name = "questions/revision_list.html"
+
+    def get_context_data(self, **kwargs):
+        obj = get_object_or_404(Answer, pk=kwargs.get('answer_pk'))
+        context_data = super(AnswerRevisionList, self).get_context_data()
         context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
         return context_data
 
@@ -167,3 +173,16 @@ class QuestionCommentUpdate(CommentUpdate):
 
 class QuestionCommentDelete(CommentDelete):
     model = QuestionComment
+
+
+class AnswerCommentCreate(CommentCreate):
+    parent_model = Answer
+    model = AnswerComment
+
+
+class AnswerCommentUpdate(CommentUpdate):
+    model = AnswerComment
+
+
+class AnswerCommentDelete(CommentDelete):
+    model = AnswerComment
