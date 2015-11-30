@@ -9,10 +9,12 @@ before_install:
 language: python
 python:
 - "3.4"
-
 install:
-  - "pip install hitch"
-  - "cd tests"
-  - "hitch init"
+  - "pip install -r requirements/local.txt"
+before_script:
+  - mkdir med/media
 script:
-  - "hitch test . --extra '{\"xvfb\":true, \"pause_on_failure\":false}'"
+  - "coverage run manage.py test"
+  - "flake8 ."
+after_success:
+  - coverage report
