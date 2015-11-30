@@ -1,5 +1,10 @@
 med_project
 ==============================
+.. image:: https://travis-ci.org/Uran198/med.svg?branch=master
+    :target: https://travis-ci.org/Uran198/med
+.. image:: https://badge.waffle.io/Uran198/med.svg?label=ready&title=Ready
+    :target: https://waffle.io/Uran198/med
+    :alt: 'Stories in Ready' 
 
 A short description of the project.
 
