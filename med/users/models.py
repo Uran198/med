@@ -23,6 +23,7 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to=upload_path,
                                blank=True,
                                validators=[validate_file_size])
+    can_answer = models.BooleanField(default=False)
 
     def __str__(self):
         return self.username

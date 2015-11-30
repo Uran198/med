@@ -86,9 +86,12 @@ class AnswerRevisionList(TemplateView):
         return context_data
 
 
-class AnswerCreate(LoginRequiredMixin, UploadImageMixin, CreateView):
+class AnswerCreate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, CreateView):
     model = Answer
     fields = ('text',)
+
+    def test_func(self, user):
+        return user.can_answer
 
     def post(self, *args, **kwargs):
         self.question = get_object_or_404(Question, pk=kwargs['parent_id'])

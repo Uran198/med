@@ -155,18 +155,33 @@ class AnswerCreateTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
             username="John",
-            password="password"
+            password="password",
+            can_answer=True,
         )
         self.question = Question.objects.create(
             title="Title",
             text="Some text",
-            author=self.user
+            author=self.user,
         )
         self.factory = RequestFactory()
         self.view = views.AnswerCreate.as_view()
         self.request = self.factory.post('/fake')
         self.request.user = self.user
-        self.request.META['HTTP_REFERER'] = '/'
+
+    def test_login_required(self):
+        request = self.factory.post('/fake', {'text': 'some text'})
+        request.user = AnonymousUser()
+        response = self.view(request, parent_id=self.question.pk)
+        self.assertEqual(response.status_code, 302)
+        self.assertEqual(len(self.question.answer_set.all()), 0)
+
+    def test_user_cannot_answer(self):
+        request = self.factory.post('/fake', {'text': 'some text'})
+        self.user.can_answer = False
+        self.user.save()
+        request.user = self.user
+        self.view(request, parent_id=self.question.pk)
+        self.assertEqual(len(self.question.answer_set.all()), 0)
 
     def test_form_invalid(self):
         response = self.view(self.request, parent_id=self.question.pk)
@@ -175,7 +190,6 @@ class AnswerCreateTest(TestCase):
 
     def test_form_valid(self):
         self.request = self.factory.post('/fake', {'text': 'some text'})
-        self.request.META['HTTP_REFERER'] = '/'
         self.request.user = self.user
         self.view(self.request, parent_id=self.question.pk)
         self.assertEqual(len(self.question.answer_set.all()), 1)
