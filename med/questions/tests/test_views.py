@@ -5,7 +5,7 @@ from django.views.generic import TemplateView
 from django.contrib.auth.models import AnonymousUser, Permission
 
 from med.users.models import User
-from ..models import Question, QuestionComment, Answer
+from ..models import Question, QuestionComment
 from .. import views
 
 
