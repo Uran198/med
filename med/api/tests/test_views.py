@@ -52,3 +52,15 @@ class UploadImageTest(TestCase):
         request.user = self.user
         response = self.view(request)
         self.assertContains(response, "Upload a valid image")
+
+    def test_big_file(self):
+        im = Image.new("RGBA", size=(10000, 10000), color=(256, 0, 0))
+        f = tempfile.NamedTemporaryFile()
+        f.name = 'temp.png'
+        im.save(f, format='png')
+        # put the carret to the beginning of the file
+        f.seek(0)
+        request = self.factory.post('/fake', {'name': f.name, 'file': f})
+        request.user = self.user
+        response = self.view(request)
+        self.assertContains(response, "Image file too large")
