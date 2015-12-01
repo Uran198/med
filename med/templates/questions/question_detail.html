@@ -171,7 +171,11 @@
     <hr/>
     {% endfor %}
 
-    <a class="btn btn-primary" href="{% url 'questions:add_answer' question.pk %}">{% trans "Add Answer" %}</a>
+    <br/>
+
+    {% if perms.questions.add_answer %}
+      <a class="btn btn-primary" href="{% url 'questions:add_answer' question.pk %}">{% trans "Add Answer" %}</a>
+    {% endif %}
   </div>
 </div>
 

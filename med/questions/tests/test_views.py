@@ -2,10 +2,10 @@ from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
 from django.views.generic import TemplateView
 
-from django.contrib.auth.models import AnonymousUser
+from django.contrib.auth.models import AnonymousUser, Permission
 
 from med.users.models import User
-from ..models import Question, QuestionComment
+from ..models import Question, QuestionComment, Answer
 from .. import views
 
 
@@ -156,13 +156,14 @@ class AnswerCreateTest(TestCase):
         self.user = User.objects.create_user(
             username="John",
             password="password",
-            can_answer=True,
         )
         self.question = Question.objects.create(
             title="Title",
             text="Some text",
             author=self.user,
         )
+        self.add_answer_permission = Permission.objects.get(codename='add_answer', content_type__app_label='questions')
+        self.user.user_permissions.add(self.add_answer_permission)
         self.factory = RequestFactory()
         self.view = views.AnswerCreate.as_view()
         self.request = self.factory.post('/fake')
@@ -177,9 +178,8 @@ class AnswerCreateTest(TestCase):
 
     def test_user_cannot_answer(self):
         request = self.factory.post('/fake', {'text': 'some text'})
-        self.user.can_answer = False
-        self.user.save()
         request.user = self.user
+        self.user.user_permissions.remove(self.add_answer_permission)
         self.view(request, parent_id=self.question.pk)
         self.assertEqual(len(self.question.answer_set.all()), 0)
 

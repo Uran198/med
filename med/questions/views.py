@@ -91,7 +91,7 @@ class AnswerCreate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, Cr
     fields = ('text',)
 
     def test_func(self, user):
-        return user.can_answer
+        return user.has_perm('questions.add_answer')
 
     def post(self, *args, **kwargs):
         self.question = get_object_or_404(Question, pk=kwargs['parent_id'])
