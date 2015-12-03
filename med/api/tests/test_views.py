@@ -31,6 +31,13 @@ class UploadImageTest(TestCase):
         response = self.view(request)
         self.assertEqual(response.status_code, 302)
 
+    # TODO: testing form should live in test_forms.py
+    def test_without_image(self):
+        request = self.factory.post('/fake')
+        request.user = self.user
+        response = self.view(request)
+        self.assertEqual(response.content, b'{"error": {"file": ["This field is required."]}}')
+
     def test_form_valid(self):
         im = Image.new("RGBA", size=(100, 100), color=(256, 0, 0))
         f = tempfile.NamedTemporaryFile()
