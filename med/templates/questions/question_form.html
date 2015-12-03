@@ -14,6 +14,7 @@
   {{ image_form|crispy }}
   <input type="submit" value="{% trans 'Add Image..' %}"/>
 </form>
+<div style='display: none;' class="alert alert-danger" id="error"></div>
 
 <form method="POST" action="">
   {% csrf_token %}

@@ -54,10 +54,10 @@ class UploadImageTest(TestCase):
         self.assertContains(response, "Upload a valid image")
 
     def test_big_file(self):
-        im = Image.new("RGBA", size=(10000, 10000), color=(256, 0, 0))
+        im = Image.new("RGBA", size=(10000, 7000), color=(256, 0, 0))
         f = tempfile.NamedTemporaryFile()
         f.name = 'temp.png'
-        im.save(f, format='png')
+        im.save(f, format='jpeg')
         # put the carret to the beginning of the file
         f.seek(0)
         request = self.factory.post('/fake', {'name': f.name, 'file': f})
