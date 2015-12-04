@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from django.contrib.auth.models import AnonymousUser, Permission
 
-from med.users.models import User
+from .factories import AnswerFactory, QuestionFactory, UserFactory
 from ..models import Question, QuestionComment
 from .. import views
 
@@ -12,15 +12,8 @@ from .. import views
 class CreateQuestionTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
+        self.question = QuestionFactory()
+        self.user = self.question.author
         self.factory = RequestFactory()
         self.request = self.factory.post('questions/create/',
                                          {'title': 'Title1', 'text': 'Other text'}
@@ -44,19 +37,9 @@ class CreateQuestionTest(TestCase):
 class QuestionUpdateTest(TestCase):
 
     def setUp(self):
-        self.alice = User.objects.create_user(
-            username="Alice",
-            password="secret",
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="secret",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Text",
-            author=self.alice
-        )
+        self.alice = UserFactory()
+        self.bob = UserFactory()
+        self.question = QuestionFactory(author=self.alice)
         self.view = views.QuestionUpdate.as_view()
         self.factory = RequestFactory()
 
@@ -76,19 +59,9 @@ class QuestionUpdateTest(TestCase):
 class QuestionDeleteTest(TestCase):
 
     def setUp(self):
-        self.alice = User.objects.create_user(
-            username="Alice",
-            password="secret",
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="secret",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Text",
-            author=self.alice
-        )
+        self.alice = UserFactory()
+        self.bob = UserFactory()
+        self.question = QuestionFactory(author=self.alice)
         self.view = views.QuestionDelete.as_view()
         self.factory = RequestFactory()
 
@@ -115,23 +88,12 @@ class QuestionDeleteTest(TestCase):
 class QuestionDetailsTest(TestCase):
 
     def setUp(self):
-        self.alice = User.objects.create_user(
-            username="Alice",
-            password="secret",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Text",
-            author=self.alice
-        )
+        self.question = QuestionFactory()
         self.comment = self.question.comment_set.create(
             text="Comment",
-            author=self.alice,
+            author=self.question.author,
         )
-        self.answer = self.question.answer_set.create(
-            text="This is answer",
-            author=self.alice,
-        )
+        self.answer = AnswerFactory(question=self.question)
         self.view = views.QuestionDetails.as_view()
         self.factory = RequestFactory()
         self.request = self.factory.get('fake/')
@@ -153,15 +115,8 @@ class QuestionDetailsTest(TestCase):
 class AnswerCreateTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="John",
-            password="password",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user,
-        )
+        self.question = QuestionFactory()
+        self.user = self.question.author
         self.add_answer_permission = Permission.objects.get(codename='add_answer', content_type__app_label='questions')
         self.user.user_permissions.add(self.add_answer_permission)
         self.factory = RequestFactory()
@@ -198,23 +153,9 @@ class AnswerCreateTest(TestCase):
 class AnswerUpdateTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="password",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
-        self.answer = self.question.answer_set.create(
-            text="Some answer",
-            author=self.user,
-        )
+        self.answer = AnswerFactory()
+        self.user = self.answer.author
+        self.question = self.answer.question
         self.factory = RequestFactory()
         self.view = views.AnswerUpdate.as_view()
         self.request = self.factory.post('/fake', {'text': "another text"})
@@ -228,7 +169,7 @@ class AnswerUpdateTest(TestCase):
 
     def test_is_not_author(self):
         request = self.factory.get('/fake')
-        request.user = self.bob
+        request.user = UserFactory()
         response = self.view(request, pk=self.answer.pk)
         self.assertEqual(response.status_code, 302)
 
@@ -248,23 +189,9 @@ class AnswerUpdateTest(TestCase):
 class AnswerDeleteTest(TestCase):
 
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="password",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
-        self.answer = self.question.answer_set.create(
-            text="Some answer",
-            author=self.user,
-        )
+        self.answer = AnswerFactory()
+        self.user = self.answer.author
+        self.question = self.answer.question
         self.factory = RequestFactory()
         self.view = views.AnswerDelete.as_view()
         self.request = self.factory.post('/fake')
@@ -278,7 +205,7 @@ class AnswerDeleteTest(TestCase):
 
     def test_is_not_author(self):
         request = self.factory.get('/fake')
-        request.user = self.bob
+        request.user = UserFactory()
         response = self.view(request, pk=self.answer.pk)
         self.assertEqual(response.status_code, 302)
 
@@ -300,15 +227,8 @@ class CommentCreateTest(TestCase):
         class Dummy(views.CommentCreate):
             model = QuestionComment
             parent_model = Question
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
+        self.question = QuestionFactory()
+        self.user = self.question.author
         self.factory = RequestFactory()
         self.view = Dummy.as_view()
         self.request = self.factory.post('/fake')
@@ -344,19 +264,8 @@ class CommentUpdateTest(TestCase):
     def setUp(self):
         class Dummy(views.CommentUpdate):
             model = QuestionComment
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="password",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
+        self.question = QuestionFactory()
+        self.user = self.question.author
         self.comment = self.question.comment_set.create(
             text="Some comment",
             author=self.user,
@@ -374,7 +283,7 @@ class CommentUpdateTest(TestCase):
 
     def test_is_not_author(self):
         request = self.factory.get('/fake')
-        request.user = self.bob
+        request.user = UserFactory()
         response = self.view(request, pk=self.comment.pk)
         self.assertEqual(response.status_code, 302)
 
@@ -396,19 +305,8 @@ class CommentDeleteTest(TestCase):
     def setUp(self):
         class Dummy(views.CommentDelete):
             model = QuestionComment
-        self.user = User.objects.create_user(
-            username="John",
-            password="password"
-        )
-        self.bob = User.objects.create_user(
-            username="Bob",
-            password="password",
-        )
-        self.question = Question.objects.create(
-            title="Title",
-            text="Some text",
-            author=self.user
-        )
+        self.question = QuestionFactory()
+        self.user = self.question.author
         self.comment = self.question.comment_set.create(
             text="Some comment",
             author=self.user,
@@ -426,7 +324,7 @@ class CommentDeleteTest(TestCase):
 
     def test_is_not_author(self):
         request = self.factory.get('/fake')
-        request.user = self.bob
+        request.user = UserFactory()
         response = self.view(request, pk=self.comment.pk)
         self.assertEqual(response.status_code, 302)
 
@@ -461,12 +359,7 @@ class RevisionListTest(TestCase):
     def setUp(self):
         self.skipTest(reason="middleware is disabled, don't know how to test")
 
-        self.user = User.objects.create_user("john")
-        self.question = Question.objects.create(
-            title="Title",
-            text="Text",
-            author=self.user,
-        )
+        self.question = QuestionFactory()
         self.view = views.RevisionList.as_view()
         self.factory = RequestFactory()
         self.request = self.factory.get('/fake')
@@ -488,16 +381,7 @@ class AnswerRevisionListTest(TestCase):
     def setUp(self):
         self.skipTest(reason="middleware is disabled, don't know how to test")
 
-        self.user = User.objects.create_user("john")
-        self.question = Question.objects.create(
-            title="Title",
-            text="Text",
-            author=self.user,
-        )
-        self.answer = self.question.answer_set.create(
-            text="Answer",
-            author=self.user,
-        )
+        self.answer = AnswerFactory(text="Answer")
         self.view = views.AnswerRevisionList.as_view()
         self.factory = RequestFactory()
         self.request = self.factory.get('/fake')
