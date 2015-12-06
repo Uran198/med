@@ -19,7 +19,7 @@ $(document).ready(function() {
                 if (data['location']) {
                     $('#error').hide();
                     $('#id_text_ifr').contents().find('body').append(
-                            '<img width="400" height="400" src="'+data['location']+'" />');
+                            '<img width="600" src="'+data['location']+'" />');
                 } else {
                     var $err = $('#error');
                     $err.text(data['error'].file[0]);
