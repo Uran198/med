@@ -26,42 +26,42 @@
     {% block angular %}
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     {% endblock %}
-
   </head>
 
   <body>
 
-    <div class="m-b">
-      <nav class="navbar navbar-dark navbar-static-top bg-inverse">
-        <div class="container">
-          <a class="navbar-brand" href="/">med_project</a>
-          <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
-            &#9776;
-          </button>
+    <div id="wrapper">
+      <div class="m-b">
+        <nav class="navbar navbar-dark navbar-static-top bg-inverse">
+          <div class="container">
+            <a class="navbar-brand" href="/">med_project</a>
+            <button type="button" class="navbar-toggler hidden-sm-up pull-right" data-toggle="collapse" data-target="#bs-navbar-collapse-1">
+              &#9776;
+            </button>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-              {% comment %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'home' %}">{% trans "Home" %}</a>
-              </li>
-              {% endcomment %}
-              {% if request.user.is_authenticated %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
-              </li>
-              {% endif %}
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
-              </li>
-            </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-toggleable-xs" id="bs-navbar-collapse-1">
+              <ul class="nav navbar-nav">
+                {% comment %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'home' %}">{% trans "Home" %}</a>
+                </li>
+                {% endcomment %}
+                {% if request.user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
+                </li>
+              </ul>
 
-            <ul class="nav navbar-nav pull-right">
-              {% if request.user.is_authenticated %}
+              <ul class="nav navbar-nav pull-right">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'users:list' %}">{% trans "Users" %}</a>
                 </li>
@@ -71,57 +71,63 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
                 </li>
-              {% else %}
+                {% else %}
                 <li class="nav-item">
                   <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
                 </li>
                 <li class="nav-item">
                   <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Log In" %}</a>
                 </li>
-              {% endif %}
-            </ul>
+                {% endif %}
+              </ul>
+            </div>
           </div>
-        </div>
-      </nav>
+        </nav>
 
-      {# Chouse your language #}
-      <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        {# Chouse your language #}
+        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}
           <input name="next" type="hidden" value="/" />
           <select name="language">
-              {% get_current_language as LANGUAGE_CODE %}
-              {% get_available_languages as LANGUAGES %}
-              {% get_language_info_list for LANGUAGES as languages %}
-              {% for language in languages %}
-                  <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                      {{ language.name_local }} ({{ language.code }})
-                  </option>
-              {% endfor %}
+            {% get_current_language as LANGUAGE_CODE %}
+            {% get_available_languages as LANGUAGES %}
+            {% get_language_info_list for LANGUAGES as languages %}
+            {% for language in languages %}
+            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+            {{ language.name_local }} ({{ language.code }})
+            </option>
+            {% endfor %}
           </select>
           <input type="submit" value="Go" />
-      </form>
+        </form>
+      </div>
 
-    </div>
+      <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+        {% endfor %}
+        {% endif %}
 
-    <div class="container">
+        {% block content %}
+        <p>{% trans "Still in testing" %}</p>
+        {% endblock content %}
+      </div> <!-- /container -->
 
-      {% if messages %}
-          {% for message in messages %}
-              <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-          {% endfor %}
-      {% endif %}
-
-      {% block content %}
-      <p>{% trans "Still in testing" %}</p>
-      {% endblock content %}
-
-    </div> <!-- /container -->
+      <div class="footer">
+        <footer class="footer">
+          <div class="conteiner">
+            <p class="text-muted text-center">Footer text goes here</p>
+          </div>
+        </footer>
+      </div>
+    </div> <!-- div#wrapper -->
 
     {% block modal %}{% endblock modal %}
 
     <!-- Le javascript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    {% block javascript %}
+      ================================================== -->
+      <!-- Placed at the end of the document so the pages load faster -->
+      {% block javascript %}
       <!-- Latest JQuery -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
@@ -132,7 +138,7 @@
 
       <!-- place project specific Javascript in this file -->
       <script src="{% static 'js/project.js' %}"></script>
-    {% endblock javascript %}
+      {% endblock javascript %}
   </body>
 </html>
- 
+

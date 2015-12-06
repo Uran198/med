@@ -55,3 +55,28 @@ div {
 [hidden][style="display: block;"] {
   display: block !important;
 }
+
+// Footer settings
+
+html, body {
+    height: 100%;
+}
+
+footer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    height: 60px;
+    background-color: #eee;
+}
+
+footer p {
+    padding: 1em;
+    padding-bottom: 0px;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 90px;
+}
