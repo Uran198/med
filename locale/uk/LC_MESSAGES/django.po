@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 17:20+0200\n"
+"POT-Creation-Date: 2015-12-07 17:26+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -343,7 +343,7 @@ msgstr "Додати зображення.."
 #: med/templates/questions/answer_form.html:24
 #: med/templates/questions/question_detail.html:185
 msgid "Add Answer"
-msgstr "Додати питання"
+msgstr "Додати відповідь"
 
 #: med/templates/questions/comment_confirm_delete.html:11
 msgid "Are you sure you want to delete this comment?"
@@ -373,6 +373,10 @@ msgstr "Редагувати"
 #: med/templates/questions/question_detail.html:171
 msgid "Add comment"
 msgstr "Прокоментувати"
+
+#: med/templates/questions/question_detail.html:99
+msgid "Answers"
+msgstr "Відповіді"
 
 #: med/users/models.py:22
 msgid "Name of User"
