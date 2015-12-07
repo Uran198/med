@@ -33,6 +33,9 @@ class Question(models.Model):
     def get_absolute_url(self):
         return reverse('questions:details', kwargs={'pk': self.id})
 
+    class Meta:
+        ordering = ('-pub_date',)
+
 
 @revisions.register
 class Answer(models.Model):
@@ -47,6 +50,9 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.text
+
+    class Meta:
+        ordering = ('-pub_date',)
 
 
 class Comment(models.Model):
