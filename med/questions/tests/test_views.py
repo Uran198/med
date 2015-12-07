@@ -89,6 +89,7 @@ class QuestionDetailsTest(TestCase):
 
     def setUp(self):
         self.question = QuestionFactory()
+        self.tag = self.question.tags.create(name='tag0')
         self.comment = self.question.comment_set.create(
             text="Comment",
             author=self.question.author,
@@ -110,6 +111,7 @@ class QuestionDetailsTest(TestCase):
         response = self.view(self.request, pk=self.question.pk, slug=self.question.slug)
         self.assertListEqual(list(response.context_data.get('comments')), [self.comment])
         self.assertListEqual(list(response.context_data.get('answers')), [self.answer])
+        self.assertListEqual(list(response.context_data.get('tags')), [self.tag])
 
 
 class AnswerCreateTest(TestCase):

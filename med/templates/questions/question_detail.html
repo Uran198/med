@@ -17,6 +17,14 @@
   </div>
 
   <div class="row">
+    <p>
+    {% for tag in tags %}
+    <a href="{% url 'questions:tag_detail' tag.pk %}">{{ tag.name }}</a>
+    {% endfor %}
+    <p>
+  </div>
+
+  <div class="row">
     {% if user == question.author %}
     <div class="small col-sm-3">
       <a class="bg-info" href="{% url 'questions:revision_list' question.pk %}">{% trans "List of revisions" %}</a>

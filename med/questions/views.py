@@ -52,6 +52,7 @@ class QuestionDetails(DetailView):
         context_data = super(QuestionDetails, self).get_context_data()
         context_data['comments'] = self.object.comment_set.all()
         context_data['answers'] = self.object.answer_set.prefetch_related('comment_set').all()
+        context_data['tags'] = self.object.tags.all()
         return context_data
 
     def dispatch(self, *args, **kwargs):
