@@ -7,7 +7,7 @@ from django.views.generic import (
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
 import reversion as revisions
 
-from .models import Question, QuestionComment, Answer, AnswerComment
+from .models import Question, QuestionComment, Answer, AnswerComment, Tag
 from .forms import UploadImageForm
 
 
@@ -20,7 +20,7 @@ class UploadImageMixin(object):
 
 class CreateQuestion(LoginRequiredMixin, UploadImageMixin, CreateView):
     model = Question
-    fields = ('title', 'text')
+    fields = ('title', 'text', 'tags')
 
     def form_valid(self, form, *args, **kwargs):
         form.instance.author = self.request.user
@@ -189,3 +189,18 @@ class AnswerCommentUpdate(CommentUpdate):
 
 class AnswerCommentDelete(CommentDelete):
     model = AnswerComment
+
+
+class TagList(ListView):
+    model = Tag
+    http_method_names = [u'get']
+
+
+class TagDetail(DetailView):
+    model = Tag
+    http_method_names = [u'get']
+
+    def get_context_data(self, **kwargs):
+        context_data = super(TagDetail, self).get_context_data(**kwargs)
+        context_data['questions'] = self.object.question_set.order_by('-pub_date')
+        return context_data

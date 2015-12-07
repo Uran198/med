@@ -1,7 +1,7 @@
 import factory
 
 from med.users.models import User
-from ..models import Question, Answer
+from ..models import Question, Answer, Tag
 
 
 class UserFactory(factory.django.DjangoModelFactory):
@@ -28,3 +28,10 @@ class AnswerFactory(factory.django.DjangoModelFactory):
     text = "This is Answer"
     question = factory.SubFactory(QuestionFactory)
     author = factory.SubFactory(UserFactory)
+
+
+class TagFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = Tag
+
+    name = factory.Sequence(lambda n: 'tag_{0}'.format(n))

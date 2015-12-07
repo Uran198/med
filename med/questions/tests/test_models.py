@@ -1,6 +1,15 @@
 from django.test import TestCase
 
-from .factories import QuestionFactory, AnswerFactory
+from .factories import QuestionFactory, AnswerFactory, TagFactory
+
+
+class TagModelTest(TestCase):
+
+    def setUp(self):
+        self.tag = TagFactory.create()
+
+    def test_str(self):
+        self.assertEqual(str(self.tag), 'tag_0')
 
 
 class QuestionModelTest(TestCase):

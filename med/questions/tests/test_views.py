@@ -4,7 +4,7 @@ from django.views.generic import TemplateView
 
 from django.contrib.auth.models import AnonymousUser, Permission
 
-from .factories import AnswerFactory, QuestionFactory, UserFactory
+from .factories import AnswerFactory, QuestionFactory, UserFactory, TagFactory
 from ..models import Question, QuestionComment
 from .. import views
 
@@ -396,3 +396,62 @@ class AnswerRevisionListTest(TestCase):
         self.answer.save()
         response = self.view(self.request, answer_pk=self.answer.pk)
         self.assertEqual(len(response.context_data['revision_list']), 1)
+
+
+class TagListTest(TestCase):
+
+    def setUp(self):
+        self.factory = RequestFactory()
+        self.view = views.TagList.as_view()
+
+    def test_post(self):
+        request = self.factory.post('/fake')
+        request.user = AnonymousUser()
+        response = self.view(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_context_data(self):
+        tags = TagFactory.create_batch(3)
+        request = self.factory.get('/fake')
+        request.user = AnonymousUser()
+        response = self.view(request)
+        self.assertListEqual(list(response.context_data['object_list']), tags)
+
+
+class TagDetailTest(TestCase):
+
+    def setUp(self):
+        self.tag = TagFactory.create()
+        self.untagged_question = QuestionFactory.create()
+        self.factory = RequestFactory()
+        self.view = views.TagDetail.as_view()
+        self.request = self.factory.get('/fake')
+        self.request.user = AnonymousUser()
+
+    def test_post(self):
+        request = self.factory.post('/fake')
+        request.user = AnonymousUser()
+        response = self.view(request)
+        self.assertEqual(response.status_code, 405)
+
+    def test_no_questions(self):
+        response = self.view(self.request, pk=self.tag.pk)
+        questions = response.context_data['questions']
+        self.assertEqual(len(questions), 0)
+
+    def test_with_questions(self):
+        question = QuestionFactory.create()
+        question.tags.add(self.tag)
+        response = self.view(self.request, pk=self.tag.pk)
+        questions = response.context_data['questions']
+        self.assertListEqual(list(questions), [question])
+
+    def test_order(self):
+        que1 = QuestionFactory.create()
+        que1.tags.add(self.tag)
+        que2 = QuestionFactory.create()
+        que2.tags.add(self.tag)
+        response = self.view(self.request, pk=self.tag.pk)
+        questions = response.context_data['questions']
+        self.assertEqual(questions[0], que2)
+        self.assertEqual(questions[1], que1)

@@ -93,4 +93,16 @@ urlpatterns = [
         views.AnswerRevisionList.as_view(),
         name='answer_revision_list',
         ),
+
+    # Tags
+
+    url(r'^tags/$',
+        views.TagList.as_view(),
+        name='tag_list',
+        ),
+
+    url(r'^tagged/(?P<pk>[0-9]+)/$',
+        views.TagDetail.as_view(),
+        name='tag_detail',
+        ),
 ]

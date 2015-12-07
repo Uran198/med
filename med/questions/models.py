@@ -7,6 +7,16 @@ import reversion as revisions
 from med.users.models import User
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=50, db_index=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ('name',)
+
+
 @revisions.register
 class Question(models.Model):
     title = models.CharField(max_length=100)
@@ -15,6 +25,7 @@ class Question(models.Model):
     author = models.ForeignKey(User)
     pub_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    tags = models.ManyToManyField(Tag, blank=True)
 
     def __str__(self):
         return "{}: {}".format(self.title, self.text)
