@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-17 03:32+0200\n"
+"POT-Creation-Date: 2015-12-07 17:20+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: config/settings/common.py:123
+#: config/settings/common.py:127
 msgid "Ukrainian"
 msgstr "Українська"
 
-#: config/settings/common.py:124
+#: config/settings/common.py:128
 msgid "English"
 msgstr "Англійська"
 
@@ -217,7 +217,7 @@ msgid "Signup"
 msgstr "Зареєструватися"
 
 #: med/templates/account/signup.html:14 med/templates/account/signup.html:24
-#: med/templates/base.html:77
+#: med/templates/base.html:80
 msgid "Sign Up"
 msgstr "Зареєструватися"
 
@@ -272,7 +272,7 @@ msgid ""
 "mail address</a>."
 msgstr ""
 
-#: med/templates/base.html:53 med/templates/questions/question_form.html:9
+#: med/templates/base.html:53 med/templates/questions/question_form.html:22
 msgid "Ask question"
 msgstr "Задати питання"
 
@@ -281,37 +281,69 @@ msgid "Questions"
 msgstr "Список питань"
 
 #: med/templates/base.html:60
+msgid "Tags"
+msgstr "Теги"
+
+#: med/templates/base.html:63 med/templates/pages/about.html:5
 msgid "About"
 msgstr "Що це?"
 
-#: med/templates/base.html:67
+#: med/templates/base.html:70
 msgid "Users"
 msgstr "Користувачі"
 
-#: med/templates/base.html:70
+#: med/templates/base.html:73
 msgid "My Profile"
 msgstr "Мій профіль"
 
-#: med/templates/base.html:73
+#: med/templates/base.html:76
 msgid "Logout"
 msgstr "Вийти"
 
-#: med/templates/base.html:80
+#: med/templates/base.html:83
 msgid "Log In"
 msgstr "Увійти"
 
-#: med/templates/base.html:115
+#: med/templates/base.html:116
 msgid "Still in testing"
 msgstr "Проводиться тестування і допрацювання"
 
+#: med/templates/pagination.html:8
+msgid "Previous"
+msgstr "Попередня"
+
+#: med/templates/pagination.html:18
+msgid "Next"
+msgstr "Наступна"
+
+#: med/templates/questions/answer_confirm_delete.html:9
+#: med/templates/questions/answer_confirm_delete.html:15
 #: med/templates/questions/comment_confirm_delete.html:9
 #: med/templates/questions/comment_confirm_delete.html:15
 #: med/templates/questions/question_confirm_delete.html:9
 #: med/templates/questions/question_confirm_delete.html:15
-#: med/templates/questions/question_detail.html:22
-#: med/templates/questions/question_detail.html:44
+#: med/templates/questions/question_detail.html:32
+#: med/templates/questions/question_detail.html:60
+#: med/templates/questions/question_detail.html:116
+#: med/templates/questions/question_detail.html:143
 msgid "Delete"
 msgstr "Видалити"
+
+#: med/templates/questions/answer_confirm_delete.html:11
+#, fuzzy
+#| msgid "Are you sure you want to delete this comment?"
+msgid "Are you sure you want to delete this answer?"
+msgstr "Ви впевнені, що хочете видалити цей коментар?"
+
+#: med/templates/questions/answer_form.html:17
+#: med/templates/questions/question_form.html:15
+msgid "Add Image.."
+msgstr "Додати зображення.."
+
+#: med/templates/questions/answer_form.html:24
+#: med/templates/questions/question_detail.html:185
+msgid "Add Answer"
+msgstr "Додати питання"
 
 #: med/templates/questions/comment_confirm_delete.html:11
 msgid "Are you sure you want to delete this comment?"
@@ -325,16 +357,24 @@ msgstr "Оновити коментар"
 msgid "Are you sure you want to delete this question?"
 msgstr "Ви впевнені, що хочете видалити це питання?"
 
-#: med/templates/questions/question_detail.html:21
-#: med/templates/questions/question_detail.html:43
+#: med/templates/questions/question_detail.html:30
+#: med/templates/questions/question_detail.html:114
+msgid "List of revisions"
+msgstr "Список змін"
+
+#: med/templates/questions/question_detail.html:31
+#: med/templates/questions/question_detail.html:59
+#: med/templates/questions/question_detail.html:115
+#: med/templates/questions/question_detail.html:142
 msgid "Edit"
 msgstr "Редагувати"
 
-#: med/templates/questions/question_detail.html:64
+#: med/templates/questions/question_detail.html:88
+#: med/templates/questions/question_detail.html:171
 msgid "Add comment"
 msgstr "Прокоментувати"
 
-#: med/users/models.py:16
+#: med/users/models.py:22
 msgid "Name of User"
 msgstr "Ім’я користувача"
 
