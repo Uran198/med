@@ -63,6 +63,7 @@ class QuestionDetails(DetailView):
 
 
 class QuestionList(ListView):
+    paginate_by = 10
     model = Question
 
 
