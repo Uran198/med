@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-07 17:26+0200\n"
+"POT-Creation-Date: 2015-12-08 13:59+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -307,6 +307,17 @@ msgstr "Увійти"
 #: med/templates/base.html:116
 msgid "Still in testing"
 msgstr "Проводиться тестування і допрацювання"
+
+#: med/templates/base.html:124
+msgid "Contact"
+msgstr "Контакти"
+
+#: med/templates/pages/contact.html:9
+msgid ""
+"For any wishes, complaints or just to say hi, feel free to contact us by "
+"email:"
+msgstr ""
+"Якщо у вас є скарги чи пропозиції або ви просто хочете з нами зв’язатися, пишіть:"
 
 #: med/templates/pagination.html:8
 msgid "Previous"
