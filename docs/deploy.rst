@@ -144,7 +144,7 @@ Bad guide - no automation :(
     server {
 
         listen   80;
-        server_name medvoloc.tk;
+        server_name .medvoloc.tk;
 
         client_max_body_size 4G;
 
@@ -166,7 +166,7 @@ Bad guide - no automation :(
 
             # pass the Host: header from the client right along so redirects
             # can be set properly within the Rack application
-            proxy_set_header Host $http_host;
+            proxy_set_header Host $host;
 
             # we don't want nginx trying to do something clever with
             # redirects, we set the Host: header above already.
