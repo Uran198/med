@@ -144,7 +144,7 @@ Bad guide - no automation :(
     server {
 
         listen   80;
-        server_name .medvoloc.tk;
+        server_name .example.com;
 
         client_max_body_size 4G;
 
@@ -154,6 +154,11 @@ Bad guide - no automation :(
         # location /media/ {
         #     alias   /webapps/hello_django/media/;
         # }
+
+        # Deny illegal Host headers
+        if ($host !~* ^(example.com|www.example.com)$ ) {
+            return 444;
+        }
 
         location / {
             # an HTTP header important enough to have its own Wikipedia entry:
