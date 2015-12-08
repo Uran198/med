@@ -141,6 +141,16 @@ Bad guide - no automation :(
     server unix:/django/<username>/run/gunicorn.sock fail_timeout=0;
     }
 
+    # To redirect www.example.com to example.com
+    # For details: http://stackoverflow.com/questions/7947030/nginx-no-www-to-www-and-www-to-no-www
+    server {
+        listen 80;
+        server_name www.example.com;
+        # $scheme will get the http protocol
+        # and 301 is best practice for tablet, phone, desktop and seo
+        return 301 $scheme://example.com$request_uri;
+    }
+
     server {
 
         listen   80;
