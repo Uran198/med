@@ -4,7 +4,7 @@ Production Configurations
 
 - Use djangosecure
 - Use Amazon's S3 for storing static files and uploaded media
-- Use mailgun to send emails
+- Use gmail to send emails
 - Use Redis on Heroku
 
 '''
@@ -105,11 +105,12 @@ INSTALLED_APPS += ("gunicorn", )
 # MAILGUN_SERVER_NAME = env('DJANGO_MAILGUN_SERVER_NAME')
 # EMAIL_SUBJECT_PREFIX = env("DJANGO_EMAIL_SUBJECT_PREFIX", default='[med_project] ')
 # SERVER_EMAIL = env('DJANGO_SERVER_EMAIL', default=DEFAULT_FROM_EMAIL)
-EMAIL_HOST = 'localhost'
-EMAIL_PORT = 1025
-EMAIL_BACKEND = env('DJANGO_EMAIL_BACKEND',
-                    default='django.core.mail.backends.console.EmailBackend')
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'medvoloc@gmail.com'
+EMAIL_HOST_PASSWORD = env("DJANGO_GMAIL_PASSWORD")
+EMAIL_PORT = 587
 
 # TEMPLATE CONFIGURATION
 # ------------------------------------------------------------------------------
