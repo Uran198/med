@@ -52,7 +52,7 @@
     <ul class="list-unstyled">
       {% for comment in comments %}
       <li class="col-sm-7 col-sm-offset-1">
-        <p class="text-justify dark">{{ comment.text }}</p>
+        <p class="text-justify dark">{{ comment.text|urlize }}</p>
         <div class="row">
           {% if user == comment.author %}
           <div class="small col-sm-2">
@@ -135,7 +135,7 @@
       <ul class="list-unstyled">
         {% for comment in answer.comment_set.all %}
         <li class="col-sm-7 col-sm-offset-1">
-          <p class="text-justify dark">{{ comment.text }}</p>
+          <p class="text-justify dark">{{ comment.text|urlize }}</p>
           <div class="row">
             {% if user == comment.author %}
             <div class="small col-sm-2">
