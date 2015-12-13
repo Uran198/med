@@ -25,14 +25,14 @@
   </div>
 
   <div class="row">
-    {% if user == question.author %}
     <div class="small col-sm-3">
+    {% if user == question.author %}
       <a class="bg-info" href="{% url 'questions:revision_list' question.pk %}">{% trans "List of revisions" %}</a>
       <a class="bg-info" href="{% url 'questions:update' question.pk %}">{% trans "Edit" %}</a>
       <a class="bg-danger" href="{% url 'questions:delete' question.pk %}">{% trans "Delete" %}</a>
-    </div>
     {% endif %}
-    <div class="col-sm-offset-4 col-sm-3">
+    </div>
+    <div class="col-sm-offset-3 col-sm-3">
       <p class="small">
         Last edited {{ question.update_date }}
       </p>
@@ -109,13 +109,13 @@
     </div>
 
     <div class="row">
-      {% if user == answer.author %}
       <div class="small col-sm-3">
+      {% if user == answer.author %}
         <a class="bg-info" href="{% url 'questions:answer_revision_list' answer.pk %}">{% trans "List of revisions" %}</a>
         <a class="bg-info" href="{% url 'questions:answer_update' answer.pk %}">{% trans "Edit" %}</a>
         <a class="bg-danger" href="{% url 'questions:answer_delete' answer.pk %}">{% trans "Delete" %}</a>
-      </div>
       {% endif %}
+      </div>
       <div class="col-sm-offset-3 col-sm-3">
         <p class="small">
         Last edited {{ answer.update_date }}
