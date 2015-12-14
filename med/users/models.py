@@ -23,6 +23,9 @@ class User(AbstractUser):
     avatar = models.ImageField(upload_to=upload_path,
                                blank=True,
                                validators=[validate_file_size])
+    # Email settings
+    email_notifications = models.BooleanField(_("Email Notifications"), default=True)
+    display_email = models.BooleanField(_("Display email"), default=False)
 
     def __str__(self):
         return self.username
