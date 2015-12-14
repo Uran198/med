@@ -1,3 +1,4 @@
+from django.core import mail
 from django.test import TestCase
 
 from .factories import QuestionFactory, AnswerFactory, TagFactory
@@ -46,6 +47,16 @@ class AnswerModelTest(TestCase):
         all_answers = self.question.answer_set.all()
         self.assertEqual(all_answers[0], answer2)
         self.assertEqual(all_answers[1], self.answer)
+
+    def test_save_email_notifications_true(self):
+        self.assertEqual(len(mail.outbox), 1)
+
+    def test_save_email_notifications_false(self):
+        author = self.question.author
+        author.email_notifications = False
+        author.save()
+        AnswerFactory.create(question=self.question)
+        self.assertEqual(len(mail.outbox), 1)
 
 
 class QuestionCommentModelTest(TestCase):

@@ -1,5 +1,9 @@
 from django.core.urlresolvers import reverse
+from django.core import mail
+from django.utils.translation import ugettext_lazy as _
 from django.db import models
+
+from django.contrib.sites.models import Site
 
 from autoslug import AutoSlugField
 import reversion as revisions
@@ -53,6 +57,24 @@ class Answer(models.Model):
 
     class Meta:
         ordering = ('-pub_date',)
+
+    def save(self, *args, **kwargs):
+        ret = super(Answer, self).save(*args, **kwargs)
+        if self.question.author.email_notifications:
+            body = ("%(author)s answered your question:\n"
+                    "Check out his response on our site: %(url)s\n"
+                    )
+            url = "http://%s%s" % (Site.objects.get_current().domain,
+                                   self.get_absolute_url())
+            body = _(body) % {'url': url,
+                              'author': self.author}
+            msg = mail.EmailMessage(
+                _("Your question was answered"),
+                body,
+                to=[self.question.author.email]
+                )
+            msg.send()
+        return ret
 
 
 class Comment(models.Model):
