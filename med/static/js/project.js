@@ -85,11 +85,28 @@ $(document).ready(function() {
     $("#id_file").on('change', handleFiles);
 
     $("#upload_image_form").on('submit', function(e) {
+        $('#error').hide();
+        $('progress').show();
+        var prog = $('progress')[0];
+        prog.value = "0";
         e.preventDefault();
         console.log("Submitted!");
         data = new FormData(e.target);
         data.append("file", dataURLToBlob(document.getElementById('src_holder').src));
         $.ajax({
+            xhr: function() {
+                var xhr = new window.XMLHttpRequest();
+                //Upload progress
+                xhr.upload.addEventListener("progress", function(evt){
+                    if (evt.lengthComputable) {
+                        var percentComplete = evt.loaded / evt.total;
+                        //Do something with upload progress
+                        prog.value = percentComplete;
+                        console.log(percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
             url: e.target.action,
             type: 'POST',
             data: data,
@@ -101,7 +118,6 @@ $(document).ready(function() {
                 console.log("Success");
                 console.log(arguments);
                 if (data['location']) {
-                    $('#error').hide();
                     $('#id_text_ifr').contents().find('body').append(
                             '<img src="'+data['location']+'" />');
                 } else {
