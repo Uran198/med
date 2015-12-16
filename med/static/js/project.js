@@ -121,4 +121,16 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Image enlargement
+    $("img").click(function(e) {
+        var im = e.target;
+        var enl = $("#enlargedImage img");
+        enl[0].src = im.src;
+        $("#enlargedImage").show();
+    });
+
+    $("#enlargedImage").click(function(e) {
+        $("#enlargedImage").hide();
+    });
 });
