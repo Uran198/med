@@ -1,7 +1,7 @@
 from django.forms import forms
 from django.forms.fields import ImageField
 from django.core.exceptions import ValidationError
-from django.core.files.storage import get_storage_class
+from django.core.files.storage import default_storage
 import django.forms
 
 
@@ -21,10 +21,11 @@ class UploadImageForm(forms.Form):
         return cleaned_file
 
     def save(self):
-        storage = get_storage_class()()
+        from django.utils.timezone import now
         f = self.cleaned_data['file']
-        filename = storage.get_available_name(f.name)
-        with storage.open(filename, 'wb') as dest:
+        # Two request in one second?
+        filename = f.name + now().strftime("%Y%m%d%H%M%S")
+        with default_storage.open(filename, 'wb') as dest:
             for chunk in f.chunks():
                 dest.write(chunk)
-        self.file_url = storage.url(filename)
+        self.file_url = default_storage.url(filename)
