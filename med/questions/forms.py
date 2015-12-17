@@ -21,10 +21,12 @@ class UploadImageForm(forms.Form):
         return cleaned_file
 
     def save(self):
+        import os
         from django.utils.timezone import now
         f = self.cleaned_data['file']
+        fname, ext = os.path.splitext(f.name)
         # Two request in one second?
-        filename = f.name + now().strftime("%Y%m%d%H%M%S")
+        filename = "%s%s" % (fname + now().strftime("%Y%m%d%H%M%S"), ext)
         with default_storage.open(filename, 'wb') as dest:
             for chunk in f.chunks():
                 dest.write(chunk)

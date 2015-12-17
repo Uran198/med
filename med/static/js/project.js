@@ -36,13 +36,11 @@ $(document).ready(function() {
     reader.onload = function(e) {
         var img = new Image();
         img.onload = function (e) {
-            console.log("Here");
 
             var canvas = $("#preview")[0];
 
             var width = img.width;
             var height = img.height;
-            console.log(width);
 
             if (width > height) {
                 if (width > MAX_WIDTH) {
@@ -57,13 +55,10 @@ $(document).ready(function() {
             }
             canvas.width = width;
             canvas.height = height;
-            console.log(canvas);
-            console.log(canvas.width);
             var ctx = canvas.getContext("2d");
             ctx.drawImage(img, 0, 0, width, height);
 
             var dataurl = canvas.toDataURL("image/png");
-            console.log(dataurl);
             document.getElementById('src_holder').src = dataurl;
         }
         img.src = e.target.result;
@@ -78,7 +73,6 @@ $(document).ready(function() {
         if (!file.type.match(/image.*/)) {
             return;
         }
-        console.log(file);
         reader.readAsDataURL(file);
     };
 
@@ -92,7 +86,7 @@ $(document).ready(function() {
         e.preventDefault();
         console.log("Submitted!");
         data = new FormData(e.target);
-        data.append("file", dataURLToBlob(document.getElementById('src_holder').src));
+        data.append("file", dataURLToBlob(document.getElementById('src_holder').src), "blob.png");
         $.ajax({
             xhr: function() {
                 var xhr = new window.XMLHttpRequest();
@@ -102,7 +96,6 @@ $(document).ready(function() {
                         var percentComplete = evt.loaded / evt.total;
                         //Do something with upload progress
                         prog.value = percentComplete;
-                        console.log(percentComplete);
                     }
                 }, false);
                 return xhr;
