@@ -1,0 +1,35 @@
+{% load i18n avatar_tags %}
+
+<div class="small row">
+  <div class="small col-sm-3">
+  {% if user == post.author %}
+  {% if rev_url %}
+    <a class="bg-info" href="{% url rev_url post.pk %}">{% trans "List of revisions" %}</a>
+  {% endif %}
+    <a class="bg-info" href="{% url edit_url post.pk %}">{% trans "Edit" %}</a>
+    <a class="bg-danger" href="{% url del_url post.pk %}">{% trans "Delete" %}</a>
+  {% endif %}
+  </div>
+  <div class="col-sm-offset-3 col-sm-3">
+    <div class="col-sm-6">
+    </div>
+    <div class="col-sm-6">
+      <p class="small">
+      Last edited {{ post.update_date }}
+      </p>
+    </div>
+  </div>
+  <div class="col-sm-3">
+    <div class="col-sm-6">
+      <p class="small">
+      Published {{ post.pub_date }} by
+      <a href="{% url 'users:detail' question.author.username %}">
+        {{ post.author }}
+      </a>
+      </p>
+    </div>
+    <div class="col-sm-6">
+      {% avatar post.author 50 %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+{% load i18n avatar_tags %}
+
+<div class="conteiner">
+  <ul class="list-unstyled">
+    {% for comment in comment_list %}
+    <li class="col-sm-10 col-sm-offset-1">
+      <p class="text-justify dark">{{ comment.text|urlize }}</p>
+
+      <div class="small row">
+        <div class="small col-sm-2">
+        {% if user == comment.author %}
+          <a class="bg-info" href="{% url edit_url comment.pk %}">{% trans "Edit" %}</a>
+          <a class="bg-danger" href="{% url delete_url comment.pk %}">{% trans "Delete" %}</a>
+        {% endif %}
+        </div>
+        <div class="col-sm-offset-4 col-sm-3">
+          <div class="col-sm-6">
+          </div>
+          <div class="col-sm-6">
+            <p class="small">
+            Last edited {{ comment.update_date }}
+            </p>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="col-sm-6">
+            <p class="small">
+            Commented {{ comment.pub_date }} by
+            <a href="{% url 'users:detail' comment.author.username %}">
+              {{ comment.author }}
+            </a>
+            </p>
+          </div>
+          <div class="col-sm-6">
+            {% avatar comment.author 45 %}
+          </div>
+        </div>
+      </div>
+    </li>
+    {% endfor %}
+
+    {% if user.is_authenticated %}
+    <div class="row">
+      <li>
+        <form action="{% url add_url post.pk %}" method="POST">
+          {% csrf_token %}
+          <div class="col-sm-7 col-sm-offset-1">
+            <textarea class="col-sm-12" id="id_text" name="text"></textarea>
+          </div>
+          <input type="submit" class="col-sm-2 btn" value="{% trans 'Add comment' %}" />
+        </form>
+      </li>
+    </div>
+    {% endif %}
+  </ul>
+</div>
