@@ -9,16 +9,7 @@
 
 {% block content %}
 
-<form id="upload_image_form" method="POST" action="{% url 'api:upload_image' %}" enctype="multipart/form-data">
-  {{ image_form|crispy }}
-  <input hidden id="src_holder"></input>
-  {% csrf_token %}
-  <input type="submit" value="{% trans 'Add Image..' %}"/>
-  <br/>
-  <canvas id="preview" style="display:none;"></canvas>
-</form>
-<div style='display: none;' class="alert alert-danger" id="error"></div>
-<progress style="display: none;" max="1" ></progress>
+{% include "questions/image_form.html" %}
 
 <form method="POST" action="">
   {% csrf_token %}

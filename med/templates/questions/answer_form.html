@@ -9,14 +9,7 @@
 
 {% block content %}
 
-{# TODO: make include or smthing here and in question_form, to make it more DRY #}
-
-<form id="upload_image_form" method="POST" action="{% url 'api:upload_image' %}" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ image_form|crispy }}
-  <input type="submit" value="{% trans 'Add Image..' %}"/>
-</form>
-<div style='display: none;' class="alert alert-danger" id="error"></div>
+{% include "questions/image_form.html" %}
 
 <form method="POST" action="">
   {% csrf_token %}
