@@ -15,6 +15,7 @@ class User(AbstractUser):
     # First Name and Last Name do not cover name patterns
     # around the globe.
     name = models.CharField(_("Name of User"), blank=True, max_length=255)
+    is_doctor = models.BooleanField(_("Is a Doctor"), default=False)
     # Email settings
     email_notifications = models.BooleanField(_("Email Notifications"), default=True)
     display_email = models.BooleanField(_("Display email"), default=False)
