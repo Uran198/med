@@ -44,4 +44,4 @@ django-reversion==1.9.3
 
 
 # Handling avatars in easy way
-django-avatar=2.2.0
+django-avatar==2.2.0
