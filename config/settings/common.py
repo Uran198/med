@@ -42,7 +42,8 @@ THIRD_PARTY_APPS = (
     'allauth.account',  # registration
     'allauth.socialaccount',  # registration
 
-    'reversion'
+    'reversion',
+    'avatar',
 )
 
 # Apps specific for this project go here.

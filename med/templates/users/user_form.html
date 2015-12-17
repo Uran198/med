@@ -6,6 +6,7 @@
 {% block content %}
     <h1>{{ user.username }}</h1>
     <a class="btn btn-primary" href="{% url 'account_email' %}">{% trans "E-Mail settings" %}</a>
+    <a class="btn btn-primary" href="{% url 'avatar_change' %}">{% trans "Change avatar" %}</a>
     <form enctype="multipart/form-data" class="form-horizontal" method="post" action="{% url 'users:update' %}">
         {% csrf_token %}
         {{ form|crispy }}

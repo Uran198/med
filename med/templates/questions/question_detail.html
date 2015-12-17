@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n crispy_forms_tags %}
+{% load i18n crispy_forms_tags avatar_tags %}
 
 {% block content %}
 
@@ -43,12 +43,17 @@
       </p>
     </div>
     <div class="col-sm-offset-0 col-sm-3">
-      <p class="small">
+      <div class="col-sm-6">
+        <p class="small">
         Asked {{ question.pub_date }} by
         <a href="{% url 'users:detail' question.author.username %}">
           {{ question.author }}
         </a>
-      </p>
+        </p>
+      </div>
+      <div class="col-sm-6">
+        {% avatar question.author %}
+      </div>
     </div>
   </div>
   <hr/>
@@ -59,24 +64,29 @@
       <li class="col-sm-7 col-sm-offset-1">
         <p class="text-justify dark">{{ comment.text|urlize }}</p>
         <div class="row">
-          {% if user == comment.author %}
           <div class="small col-sm-2">
+          {% if user == comment.author %}
             <a class="bg-info" href="{% url 'questions:comment_update' comment.pk %}">{% trans "Edit" %}</a>
             <a class="bg-danger" href="{% url 'questions:comment_delete' comment.pk %}">{% trans "Delete" %}</a>
-          </div>
           {% endif %}
-          <div class="col-sm-offset-4 col-sm-3">
+          </div>
+          <div class="col-sm-offset-4 col-sm-2">
             <p class="small">
             Last edited {{ comment.update_date }}
             </p>
           </div>
-          <div class="col-sm-offset-0 col-sm-3">
-            <p class="small">
-            Asked {{ comment.pub_date }} by
-            <a href="{% url 'users:detail' comment.author.username %}">
-              {{ comment.author }}
-            </a>
-            </p>
+          <div class="col-sm-4">
+            <div class="col-sm-6">
+              <p class="small">
+              Asked {{ comment.pub_date }} by
+              <a href="{% url 'users:detail' comment.author.username %}">
+                {{ comment.author }}
+              </a>
+              </p>
+            </div>
+            <div class="col-sm-6">
+              {% avatar comment.author %}
+            </div>
           </div>
         </div>
       </li>
@@ -126,13 +136,18 @@
         Last edited {{ answer.update_date }}
         </p>
       </div>
-      <div class="col-sm-offset-0 col-sm-3">
-        <p class="small">
-        Answered {{ answer.pub_date }} by
-        <a href="{% url 'users:detail' question.author.username %}">
-          {{ answer.author }}
-        </a>
-        </p>
+      <div class="col-sm-3">
+        <div class="col-sm-6">
+          <p class="small">
+          Answered {{ answer.pub_date }} by
+          <a href="{% url 'users:detail' question.author.username %}">
+            {{ answer.author }}
+          </a>
+          </p>
+        </div>
+        <div class="col-sm-6">
+          {% avatar answer.author %}
+        </div>
       </div>
     </div>
     <hr/>

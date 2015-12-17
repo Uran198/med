@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load static i18n %}
+{% load static i18n avatar_tags %}
 
 {% block title %}User: {{ object.username }}{% endblock %}
 
@@ -7,7 +7,8 @@
 <div class="container">
 
   <div class="row">
-    <div class="col-sm-12">
+
+    <div class="col-sm-10 text-center">
 
       <h2>{{ object.username }}</h2>
       {% if object.name %}
@@ -16,7 +17,13 @@
       {% if object.display_email %}
         <p>{{ object.email|urlize }}</p>
       {% endif %}
+
     </div>
+
+    <div class="col-sm-2">
+      {% avatar user %}
+    </div>
+
   </div>
 
 {% if object == request.user %}
@@ -24,6 +31,7 @@
 <div class="row">
 
   <div class="col-sm-12 ">
+    {# TODO: Make settings url in dropdown #}
     <a class="btn btn-primary" href="{% url 'users:update' %}">{% trans "Settings" %}</a>
     <!-- Your Stuff: Custom user template urls -->
   </div>
