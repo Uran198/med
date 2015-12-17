@@ -113,6 +113,12 @@ class QuestionDetailsTest(TestCase):
         self.assertListEqual(list(response.context_data.get('answers')), [self.answer])
         self.assertListEqual(list(response.context_data.get('tags')), [self.tag])
 
+    def test_get(self):
+        self.assertEqual(self.question.views, 0)
+        self.view(self.request, pk=self.question.pk, slug=self.question.slug)
+        self.question.refresh_from_db()
+        self.assertEqual(self.question.views, 1)
+
 
 class AnswerCreateTest(TestCase):
 

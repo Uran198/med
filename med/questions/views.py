@@ -1,5 +1,6 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
+from django.db.models import F
 from django.http import HttpResponseBadRequest
 from django.views.generic import (
     CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView)
@@ -54,6 +55,12 @@ class QuestionDetails(DetailView):
         context_data['answers'] = self.object.answer_set.prefetch_related('comment_set').all()
         context_data['tags'] = self.object.tags.all()
         return context_data
+
+    def get(self, *args, **kwargs):
+        ret = super(QuestionDetails, self).get(*args, **kwargs)
+        self.object.views = F('views') + 1
+        self.object.save()
+        return ret
 
     def dispatch(self, *args, **kwargs):
         question = get_object_or_404(Question, pk=kwargs['pk'])
