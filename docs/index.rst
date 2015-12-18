@@ -13,6 +13,8 @@ Contents:
 
    install
    deploy
+   ssl
+   redirect
    docker_ec2
    tests
 
