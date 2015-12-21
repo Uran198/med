@@ -1,3 +1,4 @@
+from django.utils.timezone import now
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import F
@@ -34,6 +35,10 @@ class QuestionUpdate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, 
 
     def test_func(self, user):
         return self.get_object().author == user
+
+    def form_valid(self, form):
+        form.instance.update_date = now()
+        return super(QuestionUpdate, self).form_valid(form)
 
 
 class QuestionDelete(LoginRequiredMixin, UserPassesTestMixin, DeleteView):

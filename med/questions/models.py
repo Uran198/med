@@ -28,7 +28,7 @@ class Question(models.Model):
     slug = AutoSlugField(populate_from='title')
     author = models.ForeignKey(User)
     pub_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
+    update_date = models.DateTimeField(auto_now_add=True)
     tags = models.ManyToManyField(Tag, blank=True)
     views = models.IntegerField(default=0)
 

@@ -55,6 +55,17 @@ class QuestionUpdateTest(TestCase):
         response = self.view(request, pk=self.question.pk)
         self.assertNotEqual(response.status_code, 200)
 
+    def test_update_field(self):
+        request = self.factory.post('/fake', {'title': "New_title",
+                                              'text': self.question.text})
+        request.user = self.alice
+        response = self.view(request, pk=self.question.pk)
+        self.assertEqual(response.status_code, 302)
+        before_date = self.question.update_date
+        self.question.refresh_from_db()
+        self.assertEqual(self.question.title, 'New_title')
+        self.assertNotEqual(self.question.update_date, before_date)
+
 
 class QuestionDeleteTest(TestCase):
 
@@ -118,6 +129,12 @@ class QuestionDetailsTest(TestCase):
         self.view(self.request, pk=self.question.pk, slug=self.question.slug)
         self.question.refresh_from_db()
         self.assertEqual(self.question.views, 1)
+
+    def test_no_update_on_view(self):
+        before = self.question.update_date
+        self.view(self.request, pk=self.question.pk, slug=self.question.slug)
+        self.question.refresh_from_db()
+        self.assertEqual(self.question.update_date, before)
 
 
 class AnswerCreateTest(TestCase):
