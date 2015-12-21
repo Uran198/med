@@ -5,7 +5,8 @@ from test_plus.test import TestCase
 
 from ..views import (
     UserRedirectView,
-    UserUpdateView
+    UserUpdateView,
+    UserListView,
 )
 
 
@@ -64,3 +65,14 @@ class TestUserUpdateView(BaseUserTestCase):
             self.view.get_object(),
             self.user
         )
+
+
+class TestUserListView(BaseUserTestCase):
+
+    def setUp(self):
+        super(TestUserListView, self).setUp()
+        self.view = UserListView()
+
+    def test_get_queryset(self):
+        queryset = self.view.get_queryset()
+        self.assertEqual(queryset[0].answers, 0)

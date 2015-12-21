@@ -3,6 +3,7 @@ from __future__ import absolute_import, unicode_literals
 
 from django.core.urlresolvers import reverse
 from django.views.generic import DetailView, ListView, RedirectView, UpdateView
+from django.db.models import Count
 
 from braces.views import LoginRequiredMixin
 
@@ -42,7 +43,9 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class UserListView(LoginRequiredMixin, ListView):
-    model = User
     # These next two lines tell the view to index lookups by username
     slug_field = "username"
     slug_url_kwarg = "username"
+
+    def get_queryset(self):
+        return User.objects.annotate(answers=Count('answer')).order_by('-answers').all()
