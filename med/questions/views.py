@@ -2,6 +2,7 @@ from django.utils.timezone import now
 from django.shortcuts import get_object_or_404, redirect
 from django.core.urlresolvers import reverse
 from django.db.models import F
+from django.db.models import Count
 from django.http import HttpResponseBadRequest
 from django.views.generic import (
     CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView)
@@ -78,6 +79,9 @@ class QuestionDetails(DetailView):
 class QuestionList(ListView):
     paginate_by = 10
     model = Question
+
+    def get_queryset(self):
+        return Question.objects.annotate(answers=Count('answer')).all()
 
 
 class RevisionList(TemplateView):

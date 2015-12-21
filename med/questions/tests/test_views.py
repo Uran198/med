@@ -67,6 +67,17 @@ class QuestionUpdateTest(TestCase):
         self.assertNotEqual(self.question.update_date, before_date)
 
 
+class QuestionListTest(TestCase):
+
+    def setUp(self):
+        self.question = QuestionFactory()
+        self.view = views.QuestionList()
+
+    def test_get_queryset(self):
+        queryset = self.view.get_queryset()
+        self.assertEqual(queryset[0].answers, 0)
+
+
 class QuestionDeleteTest(TestCase):
 
     def setUp(self):
