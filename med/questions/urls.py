@@ -33,6 +33,18 @@ urlpatterns = [
         name='list',
         ),
 
+    url(r'^archived/$',
+        views.QuestionArchiveList.as_view(),
+        name='archive_list',
+        ),
+
+    url(r'^close/(?P<pk>[0-9]+)/$',
+        views.QuestionClose.as_view(),
+        name='close'
+        ),
+
+    # Answers
+
     url(r'^answers/create/(?P<parent_id>[0-9]+)/$',
         views.AnswerCreate.as_view(),
         name='add_answer',

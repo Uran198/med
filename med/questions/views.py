@@ -76,12 +76,29 @@ class QuestionDetails(DetailView):
         return super(QuestionDetails, self).dispatch(*args, **kwargs)
 
 
+class QuestionClose(UserPassesTestMixin, UpdateView):
+    http_method_names = [u'post']
+    model = Question
+    fields = ('is_closed',)
+
+    def test_func(self, user):
+        return self.get_object().author == user
+
+
+class QuestionArchiveList(ListView):
+    paginate_by = 10
+    model = Question
+
+    def get_queryset(self):
+        return Question.objects.filter(is_closed=True).annotate(answers=Count('answer')).all()
+
+
 class QuestionList(ListView):
     paginate_by = 10
     model = Question
 
     def get_queryset(self):
-        return Question.objects.annotate(answers=Count('answer')).all()
+        return Question.objects.filter(is_closed=False).annotate(answers=Count('answer')).all()
 
 
 class RevisionList(TemplateView):

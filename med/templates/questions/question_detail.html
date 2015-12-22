@@ -11,7 +11,27 @@
 
   <div class="row">
     <div class="col-sm-12">
-      <h1>{{ question.title }}</h1>
+      <h1>{{ question.title }}
+      {% if question.is_closed %}
+      <small class="small bg-danger">{% trans "Closed" %}</small>
+      {% endif %}
+      </h1>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-2">
+      {% if question.author == user %}
+      <form action="{% url 'questions:close' question.pk %}" method="POST">
+        {% csrf_token %}
+        {% if question.is_closed %}
+        <input type="submit" class='btn btn-success' value="{% trans "Open question" %}" />
+        <input type="hidden" name="is_closed" value="False" />
+        {% else %}
+        <input type="submit" class='btn btn-danger' value="{% trans "Close question" %}" />
+        <input type="hidden" name="is_closed" value="True" />
+        {% endif %}
+      </form>
+      {% endif %}
     </div>
   </div>
   <div class="row">

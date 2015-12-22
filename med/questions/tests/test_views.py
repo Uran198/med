@@ -67,15 +67,30 @@ class QuestionUpdateTest(TestCase):
         self.assertNotEqual(self.question.update_date, before_date)
 
 
+class QuestionArchiveListTest(TestCase):
+
+    def setUp(self):
+        self.question = QuestionFactory()
+        self.question_closed = QuestionFactory(is_closed=True)
+        self.view = views.QuestionArchiveList()
+
+    def test_get_queryset(self):
+        queryset = self.view.get_queryset()
+        self.assertEqual(queryset[0].answers, 0)
+        self.assertSequenceEqual(queryset, [self.question_closed])
+
+
 class QuestionListTest(TestCase):
 
     def setUp(self):
         self.question = QuestionFactory()
+        self.question_closed = QuestionFactory(is_closed=True)
         self.view = views.QuestionList()
 
     def test_get_queryset(self):
         queryset = self.view.get_queryset()
         self.assertEqual(queryset[0].answers, 0)
+        self.assertSequenceEqual(queryset, [self.question])
 
 
 class QuestionDeleteTest(TestCase):
@@ -146,6 +161,36 @@ class QuestionDetailsTest(TestCase):
         self.view(self.request, pk=self.question.pk, slug=self.question.slug)
         self.question.refresh_from_db()
         self.assertEqual(self.question.update_date, before)
+
+
+class QuestionCloseTest(TestCase):
+
+    def setUp(self):
+        self.question = QuestionFactory()
+        self.user = self.question.author
+        self.bob = UserFactory()
+        self.view = views.QuestionClose.as_view()
+        self.factory = RequestFactory()
+        self.request = self.factory.post('fake/', {'is_closed': True})
+        self.request.user = self.user
+
+    def test_get(self):
+        request = self.factory.get('/fake')
+        request.user = self.user
+        response = self.view(request, pk=self.question.pk)
+        self.assertEqual(response.status_code, 405)
+
+    def test_is_not_author(self):
+        self.request.user = self.bob
+        self.view(self.request, pk=self.question.pk)
+        self.question.refresh_from_db()
+        self.assertEqual(self.question.is_closed, False)
+
+    def test_success_close(self):
+        response = self.view(self.request, pk=self.question.pk)
+        self.assertEqual(response['Location'], self.question.get_absolute_url())
+        self.question.refresh_from_db()
+        self.assertEqual(self.question.is_closed, True)
 
 
 class AnswerCreateTest(TestCase):
