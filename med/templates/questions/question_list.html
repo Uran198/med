@@ -4,6 +4,22 @@
 {% block content %}
 {% include 'pagination.html' %}
 
+<div class='row'>
+<h5>
+{% trans "Order by" %}
+</h5>
+</div>
+<div class='row'>
+<ul>
+  <li><a href="?o=pub_date">{% trans "Publication date increasing" %}</a></li>
+  <li><a href="?o=-pub_date">{% trans "Publication date decreasing" %}</a></li>
+  <li><a href="?o=views">{% trans "Views increasing" %}</a></li>
+  <li><a href="?o=-views">{% trans "Views decreasing" %}</a></li>
+  <li><a href="?o=answers">{% trans "Answers increasing" %}</a></li>
+  <li><a href="?o=-answers">{% trans "Answers decreasing" %}</a></li>
+</ul>
+</div>
+
 <ul class="list-unstyled">
 <hr/>
 {% for question in question_list %}

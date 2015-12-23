@@ -12,6 +12,7 @@ import reversion as revisions
 
 from .models import Question, QuestionComment, Answer, AnswerComment, Tag
 from .forms import UploadImageForm
+from .mixins import OrderByMixin
 
 
 class UploadImageMixin(object):
@@ -85,20 +86,18 @@ class QuestionClose(UserPassesTestMixin, UpdateView):
         return self.get_object().author == user
 
 
-class QuestionArchiveList(ListView):
+class QuestionArchiveList(OrderByMixin, ListView):
     paginate_by = 10
     model = Question
+    queryset = Question.objects.filter(is_closed=True).annotate(answers=Count('answer')).all()
+    allowed_order_fields = ['answers', 'views', 'pub_date']
 
-    def get_queryset(self):
-        return Question.objects.filter(is_closed=True).annotate(answers=Count('answer')).all()
 
-
-class QuestionList(ListView):
+class QuestionList(OrderByMixin, ListView):
     paginate_by = 10
     model = Question
-
-    def get_queryset(self):
-        return Question.objects.filter(is_closed=False).annotate(answers=Count('answer')).all()
+    queryset = Question.objects.filter(is_closed=False).annotate(answers=Count('answer')).all()
+    allowed_order_fields = ['answers', 'views', 'pub_date']
 
 
 class RevisionList(TemplateView):

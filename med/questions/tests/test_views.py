@@ -75,7 +75,7 @@ class QuestionArchiveListTest(TestCase):
         self.view = views.QuestionArchiveList()
 
     def test_get_queryset(self):
-        queryset = self.view.get_queryset()
+        queryset = self.view.queryset
         self.assertEqual(queryset[0].answers, 0)
         self.assertSequenceEqual(queryset, [self.question_closed])
 
@@ -88,7 +88,7 @@ class QuestionListTest(TestCase):
         self.view = views.QuestionList()
 
     def test_get_queryset(self):
-        queryset = self.view.get_queryset()
+        queryset = self.view.queryset
         self.assertEqual(queryset[0].answers, 0)
         self.assertSequenceEqual(queryset, [self.question])
 
