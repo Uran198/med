@@ -1,3 +1,13 @@
+from .forms import UploadImageForm
+
+
+class UploadImageMixin(object):
+    def get_context_data(self, *args, **kwargs):
+        context_data = super(UploadImageMixin, self).get_context_data(*args, **kwargs)
+        context_data['image_form'] = UploadImageForm()
+        return context_data
+
+
 class OrderByMixin(object):
     ORDER_BY = 'o'
 

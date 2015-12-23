@@ -1,6 +1,5 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, RequestFactory
-from django.views.generic import TemplateView
 
 from django.contrib.auth.models import AnonymousUser, Permission
 
@@ -419,20 +418,6 @@ class CommentDeleteTest(TestCase):
         response = self.view(self.request, pk=self.comment.pk)
         self.assertEqual(response['Location'], self.question.get_absolute_url())
         self.assertEquals(len(self.question.comment_set.all()), 0)
-
-
-class UploadImageMixinText(TestCase):
-
-    def setUp(self):
-        class Dummy(views.UploadImageMixin, TemplateView):
-            template_name = "fake.html"
-        self.view = Dummy.as_view()
-        self.factory = RequestFactory()
-        self.request = self.factory.get('/fake')
-        self.response = self.view(self.request)
-
-    def test_get_context_data(self):
-        self.assertNotEqual(self.response.context_data.get('image_form'), None)
 
 
 class RevisionListTest(TestCase):

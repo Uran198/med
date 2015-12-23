@@ -11,15 +11,7 @@ from braces.views import LoginRequiredMixin, UserPassesTestMixin
 import reversion as revisions
 
 from .models import Question, QuestionComment, Answer, AnswerComment, Tag
-from .forms import UploadImageForm
-from .mixins import OrderByMixin
-
-
-class UploadImageMixin(object):
-    def get_context_data(self, *args, **kwargs):
-        context_data = super(UploadImageMixin, self).get_context_data(*args, **kwargs)
-        context_data['image_form'] = UploadImageForm()
-        return context_data
+from .mixins import OrderByMixin, UploadImageMixin
 
 
 class CreateQuestion(LoginRequiredMixin, UploadImageMixin, CreateView):
