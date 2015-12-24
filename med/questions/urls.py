@@ -38,6 +38,11 @@ urlpatterns = [
         name='archive_list',
         ),
 
+    url(r'^my-questions/$',
+        views.QuestionAskedList.as_view(),
+        name='asked_list',
+        ),
+
     url(r'^close/(?P<pk>[0-9]+)/$',
         views.QuestionClose.as_view(),
         name='close'

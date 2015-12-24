@@ -66,6 +66,36 @@ class QuestionUpdateTest(TestCase):
         self.assertNotEqual(self.question.update_date, before_date)
 
 
+class QuestionAskedListTest(TestCase):
+
+    def setUp(self):
+        self.user = UserFactory()
+        self.question = QuestionFactory(author=self.user)
+        self.question_not_authored = QuestionFactory(is_closed=True)
+        self.view = views.QuestionAskedList.as_view()
+        self.factory = RequestFactory()
+
+    def test_login_required_success(self):
+        request = self.factory.get('fake/')
+        request.user = self.user
+        response = self.view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_required_fail(self):
+        request = self.factory.get('fake/')
+        request.user = AnonymousUser()
+        response = self.view(request)
+        self.assertNotEqual(response.status_code, 200)
+
+    def test_get_queryset(self):
+        request = self.factory.get('fake/')
+        request.user = self.user
+        response = self.view(request)
+        queryset = response.context_data['object_list']
+        self.assertEqual(queryset[0].answers, 0)
+        self.assertSequenceEqual(queryset, [self.question])
+
+
 class QuestionArchiveListTest(TestCase):
 
     def setUp(self):

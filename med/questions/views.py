@@ -78,17 +78,29 @@ class QuestionClose(UserPassesTestMixin, UpdateView):
         return self.get_object().author == user
 
 
+class QuestionAskedList(LoginRequiredMixin, OrderByMixin, ListView):
+    paginate_by = 10
+    model = Question
+    allowed_order_fields = ['answers', 'views', 'pub_date']
+    queryset = Question.objects.annotate(answers=Count('answer'))
+
+    def get_queryset(self):
+        qs = super(QuestionAskedList, self).get_queryset()
+        qs = qs.filter(author=self.request.user)
+        return qs
+
+
 class QuestionArchiveList(OrderByMixin, ListView):
     paginate_by = 10
     model = Question
-    queryset = Question.objects.filter(is_closed=True).annotate(answers=Count('answer')).all()
+    queryset = Question.objects.filter(is_closed=True).annotate(answers=Count('answer'))
     allowed_order_fields = ['answers', 'views', 'pub_date']
 
 
 class QuestionList(OrderByMixin, ListView):
     paginate_by = 10
     model = Question
-    queryset = Question.objects.filter(is_closed=False).annotate(answers=Count('answer')).all()
+    queryset = Question.objects.filter(is_closed=False).annotate(answers=Count('answer'))
     allowed_order_fields = ['answers', 'views', 'pub_date']
 
 
