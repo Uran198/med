@@ -58,6 +58,9 @@
                   <a class="nav-link" href="{% url 'questions:archive_list' %}">{% trans "Archive" %}</a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link" href="{% url 'haystack_search' %}">{% trans "Search" %}</a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link" href="{% url 'questions:asked_list' %}">{% trans "My Questions" %}</a>
                 </li>
                 {% endif %}

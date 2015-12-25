@@ -44,6 +44,7 @@ THIRD_PARTY_APPS = (
 
     'reversion',
     'avatar',
+    'haystack',
 )
 
 # Apps specific for this project go here.
@@ -244,3 +245,10 @@ AUTOSLUG_SLUGIFY_FUNCTION = 'slugify.slugify'
 ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': env('DJANGO_WHOOSH_INDEX_PATH', default=ROOT_DIR('whoosh_index'))
+        },
+}

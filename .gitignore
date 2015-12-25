@@ -64,3 +64,6 @@ tests/.hitch
 
 # biult docs
 docs/_build
+
+# Whoosh index
+whoosh_index

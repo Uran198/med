@@ -15,6 +15,7 @@ Contents:
    deploy
    ssl
    redirect
+   search
    docker_ec2
    tests
 

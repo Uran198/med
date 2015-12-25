@@ -27,6 +27,9 @@ urlpatterns += i18n_patterns(
     url(r'^accounts/', include('allauth.urls')),
     url(r'^avatar/', include("avatar.urls")),
 
+    # Search
+    url(r'^search/', include('haystack.urls')),
+
     # Your stuff: custom urls with internationalization includes go here
     url(r'^questions/', include('med.questions.urls', namespace='questions')),
 )
