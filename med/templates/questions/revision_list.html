@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load bleach_tags %}
 
 {% block content %}
 
@@ -7,7 +8,7 @@
 <li>
   <p>Date edited: {{ revision.update_date }}</p>
   <h4>{{ revision.title }}</h4>
-  <p>{{ revision.text|safe }}</p>
+  <p>{{ revision.text|bleach }}</p>
   <hr/>
 </li>
 {% endfor %}

@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% load i18n crispy_forms_tags avatar_tags %}
+{% load i18n crispy_forms_tags avatar_tags bleach_tags %}
 
 {% block content %}
 
@@ -36,8 +36,8 @@
   </div>
   <div class="row">
     <div class="col-sm-12">
-      {# The hope is that tinyMCE will make proper sanitization #}
-      <p class="text-justify">{{ question.text|safe }}</p>
+      {# The hope is that bleach will make proper sanitization #}
+      <p class="text-justify">{{ question.text|bleach }}</p>
     </div>
   </div>
 
@@ -66,8 +66,8 @@
   {% for answer in answers %}
     <div class="row">
       <div class="col-sm-12">
-        {# The hope is that tinyMCE will make proper sanitization #}
-        <p class="text-justify">{{ answer.text|safe }}</p>
+        {# The hope is that bleach will make proper sanitization #}
+        <p class="text-justify">{{ answer.text|bleach }}</p>
       </div>
     </div>
 

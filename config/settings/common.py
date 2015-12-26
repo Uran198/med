@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = (
     'reversion',
     'avatar',
     'haystack',
+    'django_bleach',
 )
 
 # Apps specific for this project go here.
@@ -252,3 +253,16 @@ HAYSTACK_CONNECTIONS = {
         'PATH': env('DJANGO_WHOOSH_INDEX_PATH', default=ROOT_DIR('whoosh_index'))
         },
 }
+
+# Which HTML tags are allowed
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'h1', 'h', 'h2', 'h3', 'img']
+
+# Which HTML attributes are allowed
+BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'src', 'alt']
+
+# Which CSS properties are allowed in 'style' attributes (assuming style is
+# an allowed attribute)
+BLEACH_ALLOWED_STYLES = ['font-family', 'font-weight', 'text-decoration', 'font-variant']
+
+# Strip unknown tags if True, replace with HTML escaped characters if False
+BLEACH_STRIP_TAGS = False
