@@ -3,9 +3,6 @@
 <div class="small row">
   <div class="small col-sm-3">
   {% if user == post.author %}
-  {% if rev_url %}
-    <a class="bg-info" href="{% url rev_url post.pk %}">{% trans "List of revisions" %}</a>
-  {% endif %}
     <a class="bg-info" href="{% url edit_url post.pk %}">{% trans "Edit" %}</a>
     <a class="bg-danger" href="{% url del_url post.pk %}">{% trans "Delete" %}</a>
   {% endif %}

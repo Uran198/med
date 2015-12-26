@@ -99,18 +99,6 @@ urlpatterns = [
         name='answer_comment_delete',
         ),
 
-    # Revisions
-
-    url(r'^revisions/(?P<question_pk>[0-9]+)/$',
-        views.RevisionList.as_view(),
-        name='revision_list',
-        ),
-
-    url(r'^arevisions/(?P<answer_pk>[0-9]+)/$',
-        views.AnswerRevisionList.as_view(),
-        name='answer_revision_list',
-        ),
-
     # Tags
 
     url(r'^tags/$',

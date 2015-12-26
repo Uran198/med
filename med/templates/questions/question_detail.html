@@ -49,7 +49,7 @@
     <p>
   </div>
 
-  {% include "questions/author_detail.html" with post=question rev_url='questions:revision_list' edit_url='questions:update' del_url='questions:delete' %}
+  {% include "questions/author_detail.html" with post=question edit_url='questions:update' del_url='questions:delete' %}
 
   <hr/>
 
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    {% include "questions/author_detail.html" with post=answer rev_url='questions:answer_revision_list' edit_url='questions:answer_update' del_url='questions:answer_delete' %}
+    {% include "questions/author_detail.html" with post=answer edit_url='questions:answer_update' del_url='questions:answer_delete' %}
     <hr/>
 
     {% include "questions/comment_list.html" with comment_list=answer.comment_set.all edit_url='questions:answer_comment_update' delete_url='questions:answer_comment_delete' add_url='questions:add_answer_comment' post=answer %}

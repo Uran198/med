@@ -5,10 +5,10 @@ from django.db.models import F
 from django.db.models import Count
 from django.http import HttpResponseBadRequest
 from django.views.generic import (
-    CreateView, UpdateView, DeleteView, DetailView, ListView, TemplateView)
+    CreateView, UpdateView, DeleteView, DetailView, ListView
+)
 
 from braces.views import LoginRequiredMixin, UserPassesTestMixin
-import reversion as revisions
 
 from .models import Question, QuestionComment, Answer, AnswerComment, Tag
 from .mixins import OrderByMixin, UploadImageMixin
@@ -102,26 +102,6 @@ class QuestionList(OrderByMixin, ListView):
     model = Question
     queryset = Question.objects.filter(is_closed=False).annotate(answers=Count('answer'))
     allowed_order_fields = ['answers', 'views', 'pub_date']
-
-
-class RevisionList(TemplateView):
-    template_name = "questions/revision_list.html"
-
-    def get_context_data(self, **kwargs):
-        obj = get_object_or_404(Question, pk=kwargs.get('question_pk'))
-        context_data = super(RevisionList, self).get_context_data()
-        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
-        return context_data
-
-
-class AnswerRevisionList(TemplateView):
-    template_name = "questions/revision_list.html"
-
-    def get_context_data(self, **kwargs):
-        obj = get_object_or_404(Answer, pk=kwargs.get('answer_pk'))
-        context_data = super(AnswerRevisionList, self).get_context_data()
-        context_data['revision_list'] = [x.object_version.object for x in revisions.get_for_object(obj)]
-        return context_data
 
 
 class AnswerCreate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, CreateView):

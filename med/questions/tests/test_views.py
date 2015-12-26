@@ -450,50 +450,6 @@ class CommentDeleteTest(TestCase):
         self.assertEquals(len(self.question.comment_set.all()), 0)
 
 
-class RevisionListTest(TestCase):
-
-    def setUp(self):
-        self.skipTest(reason="middleware is disabled, don't know how to test")
-
-        self.question = QuestionFactory()
-        self.view = views.RevisionList.as_view()
-        self.factory = RequestFactory()
-        self.request = self.factory.get('/fake')
-        self.request.user = AnonymousUser()
-
-    def test_get_context_data(self):
-        response = self.view(self.request, question_pk=self.question.pk)
-        self.assertEqual(len(response.context_data['revision_list']), 0)
-
-    def test_get_context_data_revisions_1(self):
-        self.question.text = "New text!"
-        self.question.save()
-        response = self.view(self.request, question_pk=self.question.pk)
-        self.assertEqual(len(response.context_data['revision_list']), 1)
-
-
-class AnswerRevisionListTest(TestCase):
-
-    def setUp(self):
-        self.skipTest(reason="middleware is disabled, don't know how to test")
-
-        self.answer = AnswerFactory(text="Answer")
-        self.view = views.AnswerRevisionList.as_view()
-        self.factory = RequestFactory()
-        self.request = self.factory.get('/fake')
-        self.request.user = AnonymousUser()
-
-    def test_get_context_data(self):
-        response = self.view(self.request, answer_pk=self.answer.pk)
-        self.assertEqual(len(response.context_data['revision_list']), 0)
-
-    def test_get_context_data_revisions_1(self):
-        self.answer.text = "New text!"
-        self.answer.save()
-        response = self.view(self.request, answer_pk=self.answer.pk)
-        self.assertEqual(len(response.context_data['revision_list']), 1)
-
-
 class TagListTest(TestCase):
 
     def setUp(self):

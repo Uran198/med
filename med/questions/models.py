@@ -6,7 +6,6 @@ from django.db import models
 from django.contrib.sites.models import Site
 
 from autoslug import AutoSlugField
-import reversion as revisions
 
 from med.users.models import User
 
@@ -21,7 +20,6 @@ class Tag(models.Model):
         ordering = ('name',)
 
 
-@revisions.register
 class Question(models.Model):
     title = models.CharField(max_length=100)
     text = models.TextField()
@@ -43,7 +41,6 @@ class Question(models.Model):
         ordering = ('-pub_date',)
 
 
-@revisions.register
 class Answer(models.Model):
     author = models.ForeignKey(User)
     question = models.ForeignKey(Question)

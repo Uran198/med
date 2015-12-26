@@ -38,9 +38,7 @@ django-redis==4.3.0
 redis>=2.10.0
 
 
-
 # Your custom requirements go here
-django-reversion==1.9.3
 
 
 # Handling avatars in easy way
