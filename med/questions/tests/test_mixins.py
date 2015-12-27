@@ -39,3 +39,11 @@ class OrderByMixinTest(TestCase):
     def test_get_ordering_fail(self):
         self.instance.request = self.factory.get('/fake?o=unknown')
         self.assertEqual(self.instance.get_ordering(), 'ORDERING')
+
+    def test_allowed_order_fields(self):
+        class ImproperlyConfigured(OrderByMixin):
+            pass
+
+        instance = ImproperlyConfigured()
+        with self.assertRaises(NotImplementedError):
+            instance.allowed_order_fields
