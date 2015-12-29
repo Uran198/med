@@ -39,7 +39,8 @@ SECURITY_MIDDLEWARE = (
 MIDDLEWARE_CLASSES = SECURITY_MIDDLEWARE + MIDDLEWARE_CLASSES
 
 # set this to 60 seconds and then to 518400 when you can prove it works
-SECURE_HSTS_SECONDS = 60
+# setting this to 0, because nginx takes care of hsts for us
+SECURE_HSTS_SECONDS = 0
 SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
     "DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS", default=True)
 SECURE_FRAME_DENY = env.bool("DJANGO_SECURE_FRAME_DENY", default=True)
