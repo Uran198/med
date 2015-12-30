@@ -96,12 +96,24 @@ class QuestionArchiveList(OrderByMixin, ListView):
     queryset = Question.objects.filter(is_closed=True).annotate(answers=Count('answer'))
     allowed_order_fields = ['answers', 'views', 'pub_date']
 
+    def get_queryset(self):
+        qs = super(QuestionArchiveList, self).get_queryset()
+        if not self.request.user.is_authenticated() or not self.request.user.is_doctor:
+            qs = qs.filter(author__is_doctor=False)
+        return qs
+
 
 class QuestionList(OrderByMixin, ListView):
     paginate_by = 10
     model = Question
     queryset = Question.objects.filter(is_closed=False).annotate(answers=Count('answer'))
     allowed_order_fields = ['answers', 'views', 'pub_date']
+
+    def get_queryset(self):
+        qs = super(QuestionList, self).get_queryset()
+        if not self.request.user.is_authenticated() or not self.request.user.is_doctor:
+            qs = qs.filter(author__is_doctor=False)
+        return qs
 
 
 class AnswerCreate(LoginRequiredMixin, UserPassesTestMixin, UploadImageMixin, CreateView):

@@ -99,27 +99,43 @@ class QuestionAskedListTest(TestCase):
 class QuestionArchiveListTest(TestCase):
 
     def setUp(self):
+        self.doctor = UserFactory(is_doctor=True)
+        self.question_doctor = QuestionFactory(
+            author=self.doctor,
+            is_closed=True)
         self.question = QuestionFactory()
         self.question_closed = QuestionFactory(is_closed=True)
         self.view = views.QuestionArchiveList()
+        self.view.request = RequestFactory().get('fake/')
+        self.view.request.user = AnonymousUser()
 
     def test_get_queryset(self):
-        queryset = self.view.queryset
+        queryset = self.view.get_queryset()
         self.assertEqual(queryset[0].answers, 0)
         self.assertSequenceEqual(queryset, [self.question_closed])
+        self.view.request.user = self.doctor
+        self.assertSequenceEqual(self.view.get_queryset(),
+                                 [self.question_closed, self.question_doctor])
 
 
 class QuestionListTest(TestCase):
 
     def setUp(self):
+        self.doctor = UserFactory(is_doctor=True)
+        self.question_doctor = QuestionFactory(author=self.doctor)
         self.question = QuestionFactory()
         self.question_closed = QuestionFactory(is_closed=True)
         self.view = views.QuestionList()
+        self.view.request = RequestFactory().get('fake/')
+        self.view.request.user = AnonymousUser()
 
     def test_get_queryset(self):
-        queryset = self.view.queryset
+        queryset = self.view.get_queryset()
         self.assertEqual(queryset[0].answers, 0)
         self.assertSequenceEqual(queryset, [self.question])
+        self.view.request.user = self.doctor
+        self.assertSequenceEqual(self.view.get_queryset(),
+                                 [self.question, self.question_doctor])
 
 
 class QuestionDeleteTest(TestCase):
