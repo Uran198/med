@@ -131,6 +131,11 @@ $(document).ready(function() {
         });
     });
 
+    // Language selection
+    $("select#select_language_id").change(function(e) {
+        $("form#select_language_form_id").submit();
+    });
+
     // Image enlargement
     $("img").click(function(e) {
         var im = e.target;

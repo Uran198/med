@@ -30,6 +30,7 @@ div {
     }
 }
 
+/*
 // This is a fix for the bootstrap4 alpha release
 
 @media (max-width: 47.9em) {
@@ -47,6 +48,7 @@ div {
     float: none !important;
   }
 }
+*/
 
 // Display django-debug-toolbar.
 // See https://github.com/django-debug-toolbar/django-debug-toolbar/issues/742
@@ -55,6 +57,12 @@ div {
 [hidden][style="display: block;"] {
   display: block !important;
 }
+
+
+.navbar-default {
+    background-image: linear-gradient(to bottom, #BEDEF2 0px, #F8F8F8 100%);
+}
+
 
 // Footer settings
 
@@ -66,12 +74,19 @@ footer {
     position: absolute;
     bottom: 0px;
     width: 100%;
-    height: 60px;
+    height: 40px;
     background-color: #eee;
+    padding-right: 60px;
+    padding-left: 60px;
 }
 
 footer p {
-    padding: 1em;
+    padding: 0.5em;
+    padding-bottom: 0px;
+}
+
+footer form {
+    padding: 0.25em;
     padding-bottom: 0px;
 }
 
