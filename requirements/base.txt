@@ -50,3 +50,6 @@ django-haystack==2.4.1
 
 # For HTML sanitization
 django-bleach==0.3.0
+
+# Template library for url manipulation
+django-spurl==0.6.4

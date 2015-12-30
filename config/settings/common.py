@@ -45,6 +45,7 @@ THIRD_PARTY_APPS = (
     'avatar',
     'haystack',
     'django_bleach',
+    'spurl',
 )
 
 # Apps specific for this project go here.
