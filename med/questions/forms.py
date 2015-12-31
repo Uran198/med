@@ -1,8 +1,9 @@
+import django.forms
 from django.forms import forms
 from django.forms.fields import ImageField
 from django.core.exceptions import ValidationError
 from django.core.files.storage import default_storage
-import django.forms
+from django.utils.translation import ugettext as _
 
 
 # TODO: should this form live in api or api's view should live in questions views
@@ -17,7 +18,7 @@ class UploadImageForm(forms.Form):
         # w, h = get_image_dimensions(cleaned_file)
         # print(w, h)
         if cleaned_file.size > 1*1024*1024:
-            raise ValidationError("Image file too large (maximum 1mb)", code='invalid')
+            raise ValidationError(_("Image file too large (maximum 1mb)"), code='invalid')
         return cleaned_file
 
     def save(self):

@@ -21,15 +21,15 @@ class Tag(models.Model):
 
 
 class Question(models.Model):
-    title = models.CharField(max_length=100)
-    text = models.TextField()
-    slug = AutoSlugField(populate_from='title')
-    author = models.ForeignKey(User)
-    pub_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag, blank=True)
-    views = models.IntegerField(default=0)
-    is_closed = models.BooleanField(default=False)
+    title = models.CharField(max_length=100, verbose_name=_("Title"))
+    text = models.TextField(verbose_name=_("Text"))
+    slug = AutoSlugField(populate_from='title', verbose_name=_("Slug"))
+    author = models.ForeignKey(User, verbose_name=_("Author"))
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Publish date"))
+    update_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Update date"))
+    tags = models.ManyToManyField(Tag, blank=True, verbose_name=_("Tags"))
+    views = models.IntegerField(default=0, verbose_name=_("Views"))
+    is_closed = models.BooleanField(default=False, verbose_name=_("Is Closed"))
 
     def __str__(self):
         return "{}: {}".format(self.title, self.text)
@@ -42,11 +42,11 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    author = models.ForeignKey(User)
-    question = models.ForeignKey(Question)
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, verbose_name=_("Author"))
+    question = models.ForeignKey(Question, verbose_name=_("Question"))
+    text = models.TextField(verbose_name=_("Text"))
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Publish date"))
+    update_date = models.DateTimeField(auto_now=True, verbose_name=_("Update date"))
 
     def get_absolute_url(self):
         return self.question.get_absolute_url()
@@ -77,10 +77,10 @@ class Answer(models.Model):
 
 
 class Comment(models.Model):
-    author = models.ForeignKey(User)
-    text = models.TextField()
-    pub_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
+    author = models.ForeignKey(User, verbose_name=_("Author"))
+    text = models.TextField(verbose_name=_("Text"))
+    pub_date = models.DateTimeField(auto_now_add=True, verbose_name=_("Publish date"))
+    update_date = models.DateTimeField(auto_now=True, verbose_name=_("Update date"))
 
     def __str__(self):
         return self.text
@@ -93,8 +93,8 @@ class Comment(models.Model):
 
 
 class QuestionComment(Comment):
-    parent = models.ForeignKey(Question, related_name='comment_set')
+    parent = models.ForeignKey(Question, related_name='comment_set', verbose_name=_("Parent"))
 
 
 class AnswerComment(Comment):
-    parent = models.ForeignKey(Answer, related_name='comment_set')
+    parent = models.ForeignKey(Answer, related_name='comment_set', verbose_name=_("Parent"))

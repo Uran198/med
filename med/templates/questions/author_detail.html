@@ -12,17 +12,22 @@
     </div>
     <div class="col-sm-6">
       <p class="small">
-      Last edited {{ post.update_date }}
+      {% blocktrans with update_date=post.update_date %}
+      Last edited {{ update_date }}
+      {% endblocktrans %}
       </p>
     </div>
   </div>
   <div class="col-sm-3">
     <div class="col-sm-6">
       <p class="small">
-      Published {{ post.pub_date }} by
-      <a href="{% url 'users:detail' question.author.username %}">
-        {{ post.author }}
+      {% url 'users:detail' post.author.username as author_url %}
+      {% blocktrans with publish_date=post.pub_date author=post.author %}
+      Published {{ publish_date }} by
+      <a href="{{ author_url }}">
+        {{ author }}
       </a>
+      {% endblocktrans %}
       </p>
     </div>
     <div class="col-sm-6">
