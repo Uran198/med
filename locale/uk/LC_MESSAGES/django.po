@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-31 08:15+0200\n"
+"POT-Creation-Date: 2015-12-31 10:16+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -60,6 +60,7 @@ msgid "Update date"
 msgstr "Дата оновлення"
 
 #: med/questions/models.py:30 med/templates/base.html:75
+#: med/templates/questions/tag_list.html:7
 msgid "Tags"
 msgstr "Теги"
 
@@ -437,7 +438,6 @@ msgstr "Наступна"
 #: med/templates/questions/author_detail.html:7
 #: med/templates/questions/comment_confirm_delete.html:9
 #: med/templates/questions/comment_confirm_delete.html:15
-#: med/templates/questions/comment_list.html:13
 #: med/templates/questions/question_confirm_delete.html:9
 #: med/templates/questions/question_confirm_delete.html:15
 msgid "Delete"
@@ -455,7 +455,6 @@ msgid "Add Answer"
 msgstr "Додати відповідь"
 
 #: med/templates/questions/author_detail.html:6
-#: med/templates/questions/comment_list.html:12
 msgid "Edit"
 msgstr "Редагувати"
 
@@ -495,7 +494,7 @@ msgstr "Ви впевнені, що хочете видалити цей ком�
 msgid "Update comment"
 msgstr "Оновити коментар"
 
-#: med/templates/questions/comment_list.html:50
+#: med/templates/questions/comment_list.html:22
 msgid "Add comment"
 msgstr "Прокоментувати"
 
