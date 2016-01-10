@@ -52,6 +52,7 @@ THIRD_PARTY_APPS = (
 LOCAL_APPS = (
     'med.users',  # custom users app
     # Your stuff: custom apps go here
+    'med.pages',
     'med.questions',
     'med.api',
 )

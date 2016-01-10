@@ -5,9 +5,10 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.views.generic import TemplateView
 from django.views import defaults as default_views
 from django.conf.urls.i18n import i18n_patterns
+
+from med.pages import views as pages_views
 
 urlpatterns = [
     # Django set_language, user {% load i18n %}{% url 'set_language' %}
@@ -15,9 +16,9 @@ urlpatterns = [
 ]
 
 urlpatterns += i18n_patterns(
-    url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name="home"),
-    url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name="about"),
-    url(r'^contact/$', TemplateView.as_view(template_name='pages/contact.html'), name="contact"),
+    url(r'^$', pages_views.HomeView.as_view(), name="home"),
+    url(r'^about/$', pages_views.AboutView.as_view(), name="about"),
+    url(r'^contact/$', pages_views.ContactView.as_view(), name="contact"),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),
