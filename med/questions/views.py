@@ -98,6 +98,7 @@ class QuestionArchiveList(OrderByMixin, ListView):
 
     def get_queryset(self):
         qs = super(QuestionArchiveList, self).get_queryset()
+        qs = qs.select_related('author')
         if not self.request.user.is_authenticated() or not self.request.user.is_doctor:
             qs = qs.filter(author__is_doctor=False)
         return qs
@@ -111,6 +112,7 @@ class QuestionList(OrderByMixin, ListView):
 
     def get_queryset(self):
         qs = super(QuestionList, self).get_queryset()
+        qs = qs.select_related('author')
         if not self.request.user.is_authenticated() or not self.request.user.is_doctor:
             qs = qs.filter(author__is_doctor=False)
         return qs
