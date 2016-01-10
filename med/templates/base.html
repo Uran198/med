@@ -56,6 +56,9 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'home' %}">{% trans "Home" %}</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
+                </li>
                 {% endcomment %}
                 {% if request.user.is_authenticated %}
                 <li class="nav-item">
@@ -76,9 +79,6 @@
                 {% endif %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'questions:tag_list' %}">{% trans "Tags" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
                 </li>
               </ul>
 
