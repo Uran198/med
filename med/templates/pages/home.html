@@ -1,1 +1,71 @@
 {% extends "base.html" %}
+{% load staticfiles i18n bleach_tags %}
+
+{% block css %}
+{{ block.super }}
+<link href="{% static 'css/carousel.css' %}" rel="stylesheet">
+{% endblock css %}
+
+{% block container %}
+
+{# Display hidden messages #}
+<div hidden>
+{% if messages %}
+{% for message in messages %}
+<div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
+{% endfor %}
+{% endif %}
+</div>
+
+
+<! -- Carousel -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+    <li class="active" data-target="#myCarousel" data-slide-to="1"></li>
+    <li class="" data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner" role="listbox">
+    <div class="item active left">
+      <img class="first-slide" src="{% static "images/first_carousel.png" %}" alt="First slide">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>{% trans "For Doctors" %}</h1>
+          <p>{% trans "Here you can share your cases and find out opinion of your colleagues" %}</p>
+          <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">{% trans "Signup" %}</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="item next left">
+      <img class="second-slide" src="{% static "images/second_carousel.png" %}" alt="Second slide">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>{% trans "For patients" %}</h1>
+          <p>{% trans "Here you can find an expert opinion about your particular illness. Also, you can find if you were treated right." %}</p>
+          <p><a class="btn btn-lg btn-primary" href="{% url 'account_signup' %}" role="button">{% trans "Signup" %}</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="item">
+      <img class="third-slide" src="{% static "images/first_carousel.png" %}" alt="Third slide">
+      <div class="container">
+        <div class="carousel-caption">
+          <h1>{% trans "Documentation" %}</h1>
+          <p>{% trans "You can find exhaustive up to date links on books and articles. Coming soon." %}</p>
+          <p><a class="btn btn-lg btn-primary disabled" href="#" role="button">{% trans "Yet to come" %}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div> <!-- End Carousel -->
+
+{% endblock container %}
