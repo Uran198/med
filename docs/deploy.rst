@@ -218,7 +218,7 @@ Bad guide - no automation :(
 
     $ service nginx restart
 
-20. Congradulate yourself!
+20. Congratulate yourself!
 
 
 NOTE::
