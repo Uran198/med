@@ -32,6 +32,9 @@ body {
 .navbar-wrapper .navbar .container {
   width: auto;
 }
+.navbar {
+    margin-bottom: 0px;
+}
 
 
 /* CUSTOMIZE THE CAROUSEL
@@ -39,6 +42,7 @@ body {
 
 /* Carousel base class */
 .carousel {
+  position: relative;
   height: 500px;
   margin-bottom: 60px;
 }
@@ -125,11 +129,26 @@ body {
   .featurette-heading {
     font-size: 50px;
   }
+
+  .navbar {
+    margin-bottom: 0px;
+  }
 }
 
 @media (min-width: 992px) {
   .featurette-heading {
     margin-top: 120px;
-  }
+    }
 }
 
+
+/* add overlay */
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left:0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}

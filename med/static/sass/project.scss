@@ -12,8 +12,7 @@ $red: #b94a48;
 // bootstrap alert CSS, translated to the django-standard levels of
 // debug, info, success, warning, error
 
-.alert-debug {
-  background-color: $white;
+.alert-debug { background-color: $white;
   border-color: $mint-green;
   color: $black;
 }
@@ -64,11 +63,6 @@ div {
 }
 
 
-.navbar {
-    margin-bottom: 0px;
-}
-
-
 // Footer settings
 
 html, body {
@@ -101,6 +95,7 @@ footer form {
     padding-bottom: 90px;
 }
 
+/* Image Inlarging */
 
 #enlargedImage {
     display: none;
