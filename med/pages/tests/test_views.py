@@ -1,3 +1,4 @@
+from django.core import mail
 from django.test import RequestFactory
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import AnonymousUser
@@ -25,3 +26,13 @@ class HomeViewTest(TestCase):
         self.request.user = AnonymousUser()
         response = self.view(self.request)
         self.assertEqual(response.status_code, 200)
+
+
+class ContactViewTest(TestCase):
+
+    def testFormValid(self):
+        self.view = views.ContactView.as_view()
+        self.request = RequestFactory().post(
+            'fake/', {'name': 'ContactName', 'message': 'Message text'})
+        self.view(self.request)
+        self.assertEqual(len(mail.outbox), 1)

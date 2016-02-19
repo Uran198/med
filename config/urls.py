@@ -18,6 +18,7 @@ urlpatterns = [
 urlpatterns += i18n_patterns(
     url(r'^$', pages_views.HomeView.as_view(), name="home"),
     url(r'^contact/$', pages_views.ContactView.as_view(), name="contact"),
+    url(r'^thankyou/$', pages_views.ThanksView.as_view(), name="thanks"),
 
     # Django Admin, use {% url 'admin:index' %}
     url(settings.ADMIN_URL, include(admin.site.urls)),
