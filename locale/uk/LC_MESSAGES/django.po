@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 07:45+0200\n"
+"POT-Creation-Date: 2016-02-25 07:55+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -26,6 +26,14 @@ msgstr "Українська"
 #: config/settings/common.py:131
 msgid "English"
 msgstr "Англійська"
+
+#: med/pages/forms.py:7
+msgid "Name"
+msgstr "Ім’я"
+
+#: med/pages/forms.py:8
+msgid "Message"
+msgstr "Повідомлення"
 
 #: med/questions/forms.py:21
 msgid "Image file too large (maximum 1mb)"
