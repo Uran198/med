@@ -232,6 +232,9 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 
+# Custom form for signup
+ACCOUNT_SIGNUP_FORM_CLASS = 'med.users.forms.SignupForm'
+
 # Custom user app defaults
 # Select the correct user model
 AUTH_USER_MODEL = 'users.User'
