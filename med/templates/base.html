@@ -67,9 +67,12 @@
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
                 </li>
+                {% comment %}
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'questions:archive_list' %}">{% trans "Archive" %}</a>
                 </li>
+                {% endcomment %}
+                <li class="nav-item">
                 <li class="nav-item">
                   <a class="nav-link" href="{% url 'haystack_search' %}">{% trans "Search" %}</a>
                 </li>
