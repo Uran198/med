@@ -2,6 +2,7 @@ import tempfile
 from PIL import Image
 
 from django.test import TestCase, RequestFactory
+from django.utils import translation
 
 from django.contrib.auth.models import AnonymousUser
 
@@ -18,6 +19,7 @@ class UploadImageTest(TestCase):
             password="pass",
         )
         self.view = views.UploadImage.as_view()
+        translation.activate('en')
 
     def test_get(self):
         request = self.factory.get('/fake')
