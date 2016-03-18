@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.01\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-25 07:55+0200\n"
+"POT-Creation-Date: 2016-03-18 08:54+0200\n"
 "PO-Revision-Date: 2015-11-16 19:20+2\n"
 "Last-Translator: Attila Tovt <uran198@gmail.com>\n"
 "Language-Team: Language <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr "Дата публікації"
 msgid "Update date"
 msgstr "Дата оновлення"
 
-#: med/questions/models.py:30 med/templates/base.html:82
+#: med/questions/models.py:30 med/templates/base.html:86
 #: med/templates/questions/tag_list.html:7
 msgid "Tags"
 msgstr "Теги"
@@ -303,7 +303,7 @@ msgid "Signup"
 msgstr "Зареєструватися"
 
 #: med/templates/account/signup.html:13 med/templates/account/signup.html:23
-#: med/templates/base.html:99
+#: med/templates/base.html:103
 msgid "Sign Up"
 msgstr "Зареєструватися"
 
@@ -385,40 +385,36 @@ msgstr "Задати питання"
 msgid "Questions"
 msgstr "Список питань"
 
-#: med/templates/base.html:72
-msgid "Archive"
-msgstr "Архів питань"
-
-#: med/templates/base.html:75 med/templates/search/search.html:5
+#: med/templates/base.html:79 med/templates/search/search.html:5
 #: med/templates/search/search.html:13
 msgid "Search"
 msgstr "Пошук"
 
-#: med/templates/base.html:78
+#: med/templates/base.html:82
 msgid "My Questions"
 msgstr "Мої питання"
 
-#: med/templates/base.html:89
+#: med/templates/base.html:93
 msgid "Users"
 msgstr "Користувачі"
 
-#: med/templates/base.html:92
+#: med/templates/base.html:96
 msgid "My Profile"
 msgstr "Мій профіль"
 
-#: med/templates/base.html:95
+#: med/templates/base.html:99
 msgid "Logout"
 msgstr "Вийти"
 
-#: med/templates/base.html:102
+#: med/templates/base.html:106
 msgid "Log In"
 msgstr "Увійти"
 
-#: med/templates/base.html:121
+#: med/templates/base.html:125
 msgid "Still in testing"
 msgstr "Проводиться тестування і допрацювання"
 
-#: med/templates/base.html:132
+#: med/templates/base.html:136
 msgid "Contact"
 msgstr "Контакти"
 
@@ -651,6 +647,14 @@ msgstr "Е-мейл налаштування"
 msgid "Change avatar"
 msgstr "Змінити аватар"
 
+#: med/templates/users/user_list.html:13
+msgid "Handle (No. of answers)"
+msgstr "Ім’я (к-сть відповідей)"
+
+#: med/templates/users/user_list.html:14
+msgid "Date Joined"
+msgstr "Дата реєстрації"
+
 #: med/users/forms.py:6
 msgid "I'm a medical specialist"
 msgstr "Я лікарь"
@@ -670,6 +674,9 @@ msgstr "Е-мейл сповіщення"
 #: med/users/models.py:21
 msgid "Display email"
 msgstr "Відображати е-мейл адресу"
+
+#~ msgid "Archive"
+#~ msgstr "Архів питань"
 
 #, fuzzy
 #~| msgid "Signup"

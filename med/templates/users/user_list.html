@@ -9,14 +9,19 @@
     <h2>Users</h2>
 
     <div class="list-group">
+      <div class="col-sm-12">
+        <h4 class="col-sm-10">{% trans "Handle (No. of answers)" %}</h4>
+        <h4 class="col-sm-2">{% trans "Date Joined" %}</h4>
+      </div>
       {% for user in user_list %}
-      <a href="{% url 'users:detail' user.username %}" class="list-group-item-heading list-group-item
+      <a href="{% url 'users:detail' user.username %}" class="list-group-item-heading list-group-item col-sm-12
         {% if user.is_doctor %}
         special
         {% endif %}
         "
         >
-          <h4>{{ user.username }} ({{ user.answers }})</h4>
+          <h4 class="col-sm-10">{{ user.username }} ({{ user.answers }})</h4>
+          <p class="col-sm-2">{{ user.date_joined }}</p>
       </a>
       {% endfor %}
 
