@@ -132,8 +132,8 @@ $(document).ready(function() {
     });
 
     // Language selection
-    $("select#select_language_id").change(function(e) {
-        $("form#select_language_form_id").submit();
+    $("#select_language_id").change(function(e) {
+        $("#select_language_form_id").submit();
     });
 
     // Image enlargement
