@@ -258,7 +258,7 @@ HAYSTACK_CONNECTIONS = {
 }
 
 # Which HTML tags are allowed
-BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'h1', 'h', 'h2', 'h3', 'img']
+BLEACH_ALLOWED_TAGS = ['p', 'b', 'i', 'u', 'em', 'strong', 'a', 'h1', 'h', 'h2', 'h3', 'img', 'ul', 'ol', 'li']
 
 # Which HTML attributes are allowed
 BLEACH_ALLOWED_ATTRIBUTES = ['href', 'title', 'src', 'alt']
