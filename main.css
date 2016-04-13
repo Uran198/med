@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-color: #37343F;
+}
+
+header nav {
+    padding: 0 7.5%;
+}
+
+header nav ul {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+header nav ul li a {
+    display: block;
+    padding: 1.5em;
+}
+
+header nav {
+    background-color: #64578B;
+    margin: 0;
+}
+
+header nav a {
+    font-family: 'Noto Serif', serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #F4F1FC;
+    font-weight: 600;
+    transition: all 0.2s ease-in;
+}
+
+header nav a:hover {
+    color: #B7ACD5;
+}
+
+.logo {
+    font-family: 'Architects Daughter', cursive;
+    text-align: center;
+    display: block;
+    padding: 1.3em;
+    text-transform: none;
+    border-bottom: 1px solid black;
+}
+
+@media screen and (min-width: 30em) {
+    header nav ul, .logo, header nav ul li {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    header nav ul li a {
+        padding: 1em;
+    }
+
+    .logo {
+        border: none;
+        padding: 1em;
+        padding-right: 4em;
+    }
+}
+
+
+/**
+ * CONTENT
+ **/
+
+.main {
+    margin: 0 auto;
+    width: 85%;
+    max-width: 1200px;
+    background-color: white;
+    padding: 4em 1em;
+    overflow: hidden;
+}
+
+.typography {
+    width: 60%;
+    float: left;
+}
+
+h1 {
+    font-family: 'Noto Serif', serif;
+}
+
+.swatches {
+    width: 10%;
+    float: left;
+}
+
+.colors ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.colors li {
+    display: block;
+    width: 5em;
+    height: 5em;
+    margin: 0.2em;
+}
+
+.primary {
+    background-color: #64578B;
+}
+
+.secondary {
+    background-color: #37343F;
+}
+
+.neutral {
+    background-color: #8B8865;
+}
+
+.details {
+    width: 30%;
+    float: right;
+}
+
