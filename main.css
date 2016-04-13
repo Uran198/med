@@ -54,7 +54,7 @@ header nav a:hover {
     border-bottom: 1px solid black;
 }
 
-@media screen and (min-width: 30em) {
+@media screen and (min-width: 40em) {
     header nav ul, .logo, header nav ul li {
         display: inline-block;
         vertical-align: middle;
@@ -78,25 +78,15 @@ header nav a:hover {
 
 .main {
     margin: 0 auto;
-    width: 85%;
+    width: 99%;
     max-width: 1200px;
     background-color: white;
     padding: 4em 1em;
     overflow: hidden;
 }
 
-.typography {
-    width: 60%;
-    float: left;
-}
-
 h1 {
     font-family: 'Noto Serif', serif;
-}
-
-.swatches {
-    width: 10%;
-    float: left;
 }
 
 .colors ul {
@@ -106,7 +96,7 @@ h1 {
 }
 
 .colors li {
-    display: block;
+    display: inline-block;
     width: 5em;
     height: 5em;
     margin: 0.2em;
@@ -124,11 +114,6 @@ h1 {
     background-color: #8B8865;
 }
 
-.details {
-    width: 30%;
-    float: right;
-}
-
 .details ul {
     list-style: none;
     padding: 0;
@@ -142,4 +127,29 @@ h1 {
 
 img {
     max-width: 100%;
+}
+
+@media screen and (min-width: 70em) {
+    .details {
+        width: 30%;
+        float: right;
+    }
+
+    .typography {
+        width: 60%;
+        float: left;
+    }
+
+    .colors li {
+        display: block;
+    }
+
+    .swatches {
+        width: 10%;
+        float: left;
+    }
+
+    .main {
+        width: 85%;
+    }
 }
