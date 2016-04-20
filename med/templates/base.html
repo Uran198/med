@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}med_project{% endblock title %}</title>
+    <title>{% block title %}Medvoloc{% endblock title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -15,11 +15,14 @@
 
     {% block css %}
     <!-- Latest compiled and minified CSS -->
+    <!--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
+    -->
     <!-- Your stuff: Third-party css libraries go here -->
 
+    <!-- Fonts -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans|Noto+Serif|Architects+Daughter&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
     <!-- This file store project specific CSS -->
     <link href="{% static 'css/project.css' %}" rel="stylesheet">
     {% endblock %}
@@ -31,130 +34,102 @@
 
   <body>
 
-    <div id="wrapper">
-      <div class="m-b">
-        <nav class="navbar navbar-default navbar-static-top">
-          <div class="container">
-            <div class="navbar-header">
-              <a class="navbar-brand" href=
-              {% if user.is_authenticated %}"{% url 'questions:list' %}"
-              {% else %}"/"
-              {% endif %}
-                >med_project</a>
-              <button type="button" class="navbar-toggle collapsed visible-xs-block" aria-controls="navbar" data-toggle="collapse" data-target="#navbar">
-                <span class="sr-only">{% trans "Toggle navigation" %}</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
+    <header>
+      <nav>
+        <a class="logo" href=
+           {% if user.is_authenticated %}"{% url 'questions:list' %}"
+           {% else %}"/"
+           {% endif %}
+           >Medvoloc</a>
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="navbar">
-              <ul class="nav navbar-nav">
-                {% comment %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'home' %}">{% trans "Home" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'about' %}">{% trans "About" %}</a>
-                </li>
-                {% endcomment %}
-                {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
-                </li>
-                {% comment %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'questions:archive_list' %}">{% trans "Archive" %}</a>
-                </li>
-                {% endcomment %}
-                <li class="nav-item">
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'haystack_search' %}">{% trans "Search" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'questions:asked_list' %}">{% trans "My Questions" %}</a>
-                </li>
-                {% endif %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'questions:tag_list' %}">{% trans "Tags" %}</a>
-                </li>
-              </ul>
+        <div class="navigations">
+          <ul>
+            <li>
+              <a href="{% url 'about' %}">{% trans "About" %}</a>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li>
+              <a href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
+            </li>
+            {% comment %}
+            <li>
+              <a href="{% url 'questions:archive_list' %}">{% trans "Archive" %}</a>
+            </li>
+            {% endcomment %}
+            <li>
+              <a href="{% url 'haystack_search' %}">{% trans "Search" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'questions:asked_list' %}">{% trans "My Questions" %}</a>
+            </li>
+            {% endif %}
+            <li>
+              <a href="{% url 'questions:tag_list' %}">{% trans "Tags" %}</a>
+            </li>
+          </ul>
 
-              <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_authenticated %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:list' %}">{% trans "Users" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                  <a id="sign-up-link" class="nav-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
-                </li>
-                <li class="nav-item">
-                  <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Log In" %}</a>
-                </li>
-                {% endif %}
-              </ul>
-            </div>
-          </div>
-        </nav>
+          <ul class="actions">
+            {% if request.user.is_authenticated %}
+            <li>
+              <a href="{% url 'users:list' %}">{% trans "Users" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+            </li>
+            <li>
+              <a href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
+            </li>
+            {% else %}
+            <li>
+              <a id="sign-up-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>
+            </li>
+            <li>
+              <a id="log-in-link" href="{% url 'account_login' %}">{% trans "Log In" %}</a>
+            </li>
+            {% endif %}
+          </ul> <!-- .actions -->
+        </div> <!-- .navigations -->
+      </nav>
+    </header>
 
+    {% block container %}
+    <div class="main">
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert{% if message.tags %}-{{ message.tags }}{% endif %}">
+        {{ message }}
       </div>
+      {% endfor %}
+      {% endif %}
 
-      {% block container %}
-      <div class="container">
-        {% if messages %}
-        {% for message in messages %}
-        <div class="alert {% if message.tags %}alert-{{ message.tags }}"{% endif %}>{{ message }}</div>
-        {% endfor %}
-        {% endif %}
+      {% block content %}
+      <p>{% trans "Still in testing" %}</p>
+      {% endblock content %}
+    </div> <!-- .main -->
+    {% endblock container %}
 
-        {% block content %}
-        <p>{% trans "Still in testing" %}</p>
-        {% endblock content %}
-      </div> <!-- /container -->
-      {% endblock container %}
-
-      <div class="footer">
-        <footer class="footer">
-          <div class="conteiner">
-            <div class="row">
-              <div class="col-sm-1 col-xs-4">
-                <p class="text-muted text-left">
-                <a class="text-muted" href="{% url 'contact' %}">{% trans "Contact" %}</a>
-                </p>
-              </div>
-              {# Chouse your language #}
-              <form id="select_language_form_id" action="{% url 'set_language' %}" method="post">{% csrf_token %}
-                <input name="next" type="hidden" value="/" />
-                <div class="col-sm-offset-8 col-sm-3 col-xs-8">
-                  <select class="form-control btn btn-default" name="language" id="select_language_id">
-                    {% get_current_language as LANGUAGE_CODE %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_language_info_list for LANGUAGES as languages %}
-                    {% for language in languages %}
-                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                    {{ language.name_local }} ({{ language.code }})
-                    </option>
-                    {% endfor %}
-                  </select>
-                </div>
-              </form>
-            </div>
-          </div>
-        </footer>
-      </div>
-    </div> <!-- div#wrapper -->
+    <footer>
+      <ul class="links">
+        <li><a href="{% url 'contact' %}">{% trans "Contact" %}</a></li>
+      </ul>
+      {# Chouse your language #}
+      <form id="select_language_form_id" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+        <input name="next" type="hidden" value="/" />
+        <select name="language" id="select_language_id">
+          {% get_current_language as LANGUAGE_CODE %}
+          {% get_available_languages as LANGUAGES %}
+          {% get_language_info_list for LANGUAGES as languages %}
+          {% for language in languages %}
+          <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+          {{ language.name_local }} ({{ language.code }})
+          </option>
+          {% endfor %}
+        </select>
+      </form>
+    </footer>
 
     {% block modal %}{% endblock modal %}
 
@@ -166,13 +141,15 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
       <!-- Latest compiled and minified JavaScript -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+      <!--
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+        -->
 
-      <!-- Your stuff: Third-party javascript libraries go here -->
+        <!-- Your stuff: Third-party javascript libraries go here -->
 
-      <!-- place project specific Javascript in this file -->
-      <script src="{% static 'js/project.js' %}"></script>
-      {% endblock javascript %}
+        <!-- place project specific Javascript in this file -->
+        <script src="{% static 'js/project.js' %}"></script>
+        {% endblock javascript %}
   </body>
 </html>
 

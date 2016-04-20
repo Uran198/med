@@ -1,67 +1,22 @@
-.alert-debug {
-  background-color: #fff;
-  border-color: #d6e9c6;
-  color: #000; }
-
-.alert-error {
-  background-color: #f2dede;
-  border-color: #eed3d7;
-  color: #b94a48; }
-
-div .dark {
-  background-color: #efefef; }
-
-/*
-// This is a fix for the bootstrap4 alpha release
-
-@media (max-width: 47.9em) {
-  .navbar-nav .nav-item {
-    display: inline-block;
-    float: none;
-    width: 100%;
-  }
-
-  .navbar-nav .nav-item + .nav-item {
-    margin-left: 0;
-  }
-
-  .nav.navbar-nav.pull-right {
-    float: none !important;
-  }
-}
-*/
 [hidden][style="display: block;"] {
   display: block !important; }
 
-.navbar-default {
-  background-image: linear-gradient(to bottom, #909EA7 0px, #F8F8F8 100%); }
+/**
+ * GENERAL
+ **/
+* {
+  box-sizing: border-box; }
 
-html, body {
-  height: 100%; }
-
-footer {
-  position: absolute;
-  bottom: 0px;
-  width: 100%;
-  height: 40px;
-  background-color: #eee;
-  padding-right: 60px;
-  padding-left: 60px; }
-
-footer p {
-  padding: 0.5em;
-  padding-bottom: 0px; }
-
-footer form {
-  padding: 0.25em;
-  padding-bottom: 0px; }
-
-#wrapper {
-  min-height: 100%;
+body {
+  font-family: 'Open Sans', sans-serif;
   position: relative;
-  padding-bottom: 90px; }
+  margin: 0;
+  padding: 0;
+  background-color: #37343F; }
 
-/* Image Inlarging */
+/**
+ * Image Inlarging
+ **/
 #enlargedImage {
   display: none;
   position: fixed;
@@ -80,6 +35,9 @@ footer form {
 .special {
   background-color: rgba(116, 159, 224, 0.26); }
 
+/**
+ * Main page
+ **/
 article {
   margin: 2em auto;
   width: 70%;
@@ -90,3 +48,149 @@ article p {
 
 article p:first-letter {
   font-size: 21px; }
+
+/**
+ * HEADER
+ **/
+header nav {
+  background-color: #64578B;
+  margin: 0; }
+  header nav ul {
+    text-align: center;
+    list-style: none;
+    padding: 0;
+    margin: 0; }
+    header nav ul li a {
+      display: block;
+      padding: 1.5em; }
+  header nav a {
+    font-family: 'Noto Serif', serif;
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #F4F1FC;
+    font-weight: 600;
+    transition: all 0.2s ease-in; }
+  header nav a:hover {
+    color: #B7ACD5; }
+  header nav .logo {
+    font-family: 'Architects Daughter', cursive;
+    text-align: center;
+    display: block;
+    padding: 1.3em;
+    text-transform: none;
+    border-bottom: 1px solid black; }
+
+@media screen and (min-width: 40em) {
+  header nav {
+    padding: 0 7.5%; }
+    header nav .navigations {
+      display: inline; }
+    header nav ul, header nav .logo, header nav ul li {
+      display: inline-block;
+      vertical-align: middle; }
+    header nav ul li a {
+      padding: 1em; }
+    header nav .logo {
+      border: none;
+      padding: 1em;
+      padding-right: 2em; }
+    header nav .actions {
+      float: right; } }
+
+/**
+ * FOOTER
+ **/
+body {
+  position: relative;
+  min-height: 100%;
+  padding-bottom: 10em; }
+
+html {
+  height: 100%; }
+
+footer {
+  position: absolute;
+  bottom: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 10em;
+  background-color: #eee;
+  text-align: center; }
+  footer .links {
+    margin: 0;
+    padding: 0;
+    list-style: none; }
+    footer .links a {
+      display: block;
+      padding: 0.7em;
+      text-decoration: none;
+      color: #64578B; }
+    footer .links a:hover {
+      color: #37343F; }
+  footer form {
+    padding: 0; }
+    footer form select {
+      background-color: #37343F;
+      border: none;
+      color: #FFF;
+      padding: 0.5em; }
+
+@media screen and (min-width: 40em) {
+  footer {
+    height: 4em;
+    padding: 1em 7.5%; }
+    footer .links {
+      float: left; }
+      footer .links li {
+        display: inline-block; }
+      footer .links a {
+        padding: 0.4em; }
+    footer form {
+      float: right; } }
+
+/**
+ * ALERT
+ **/
+.alert, .alert-debug, .alert-error, .alert-success, .alert-info, .alert-warning {
+  padding: 1em;
+  background-color: #d6e9c6;
+  border: 1px solid transparent;
+  -webkit-border-radius: 32px;
+  -moz-border-radius: 32px;
+  border-radius: 32px;
+  text-align: center;
+  margin: 0; }
+
+.alert-debug {
+  background-color: lightgray;
+  color: #000; }
+
+.alert-error {
+  background-color: #f2dede;
+  color: #b94a48; }
+
+.alert-success {
+  background-color: #c9e7c1;
+  color: #167810; }
+
+.alert-info {
+  background-color: #d5dcf8;
+  color: #142E6C; }
+
+.alert-warning {
+  background-color: #f5f4ad;
+  color: #6B6727; }
+
+/**
+ * CONTENT
+ **/
+.main {
+  margin: 0 auto;
+  width: 99%;
+  max-width: 1200px;
+  background-color: white;
+  padding: 3em 1em;
+  overflow: hidden; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif', serif; }
