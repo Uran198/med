@@ -37,7 +37,7 @@
   <div class="row">
     <div class="col-sm-12">
       {# The hope is that bleach will make proper sanitization #}
-      <p class="text-justify">{{ question.text|bleach|urlize }}</p>
+      <p class="text-justify">{{ question.text|bleach }}</p>
     </div>
   </div>
 
@@ -67,7 +67,7 @@
     <div class="row">
       <div class="col-sm-12">
         {# The hope is that bleach will make proper sanitization #}
-        <p class="text-justify">{{ answer.text|bleach|urlize }}</p>
+        <p class="text-justify">{{ answer.text|bleach }}</p>
       </div>
     </div>
 
