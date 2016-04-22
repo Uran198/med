@@ -147,4 +147,14 @@ $(document).ready(function() {
     $("#enlargedImage").click(function(e) {
         $("#enlargedImage").hide();
     });
+
+    // navigation dropdown
+    $("#navdrop-trigger").click(function(e) {
+        var $navdrop = $("#navdrop");
+        if ($navdrop.hasClass("show")) {
+            $navdrop.removeClass("show");
+        } else {
+            $navdrop.addClass("show");
+        }
+    });
 });

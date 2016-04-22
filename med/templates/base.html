@@ -1,4 +1,4 @@
-{% load staticfiles i18n %}<!DOCTYPE html>
+{% load staticfiles i18n avatar_tags %}<!DOCTYPE html>
 <html lang="en" ng-app>
   <head>
     <meta charset="utf-8">
@@ -49,39 +49,51 @@
             </li>
             {% if request.user.is_authenticated %}
             <li>
-              <a href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
-            </li>
-            <li>
               <a href="{% url 'questions:list' %}">{% trans "Questions" %}</a>
             </li>
             {% comment %}
             <li>
+              <a href="{% url 'questions:create' %}">{% trans "Ask question" %}</a>
+            </li>
+            <li>
               <a href="{% url 'questions:archive_list' %}">{% trans "Archive" %}</a>
             </li>
-            {% endcomment %}
             <li>
               <a href="{% url 'haystack_search' %}">{% trans "Search" %}</a>
             </li>
             <li>
               <a href="{% url 'questions:asked_list' %}">{% trans "My Questions" %}</a>
             </li>
-            {% endif %}
             <li>
               <a href="{% url 'questions:tag_list' %}">{% trans "Tags" %}</a>
             </li>
+            {% endcomment %}
+            {% endif %}
           </ul>
 
-          <ul class="actions">
-            {% if request.user.is_authenticated %}
-            <li>
-              <a href="{% url 'users:list' %}">{% trans "Users" %}</a>
-            </li>
+          {% if request.user.is_authenticated %}
+          <div class="actions">
+            <div class="user-nav" id="navdrop-trigger">
+              {% avatar request.user 50 %}
+            </div>
+            <ul id="navdrop">
             <li>
               <a href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
             </li>
             <li>
               <a href="{% url 'account_logout' %}">{% trans "Logout" %}</a>
             </li>
+            </ul>
+          </div>
+          {% endif %}
+
+          <ul class="actions">
+            {% if request.user.is_authenticated %}
+            {% comment %}
+            <li>
+              <a href="{% url 'users:list' %}">{% trans "Users" %}</a>
+            </li>
+            {% endcomment %}
             {% else %}
             <li>
               <a id="sign-up-link" href="{% url 'account_signup' %}">{% trans "Sign Up" %}</a>

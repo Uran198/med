@@ -10,6 +10,10 @@
  * GENERAL
  **/
 
+$neutral-color: #8B8865;
+$primary-color: #64578B;
+$secondary-color: #37343F;
+
 * {
     box-sizing: border-box;
 }
@@ -110,6 +114,23 @@ header nav {
         text-transform: none;
         border-bottom: 1px solid black;
     }
+
+    div.actions {
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+
+        ul, ul li {
+            display: block;
+        }
+
+        .user-nav img {
+            display: none;
+            -webkit-border-radius: 200px;
+            -moz-border-radius: 200px;
+            border-radius: 200px;
+        }
+    }
 }
 
 @media screen and (min-width: 40em) {
@@ -138,6 +159,48 @@ header nav {
         .actions {
             float: right;
         }
+
+        .user-nav img {
+            transition: all 0.2s ease-in;
+            border: solid 1px transparent;
+        }
+
+        .user-nav img:hover {
+            border: solid 1px $secondary-color;
+        }
+
+        div.actions {
+            position: relative;
+
+            .user-nav img {
+                cursor: pointer;
+                display: block;
+                height: 50px;
+            }
+
+            .show {
+                display: block;
+            }
+
+            ul {
+                display: none;
+                position: absolute;
+                top: 50px;
+                right: 0;
+                background-color: #444;
+                transition: all 0.3s linear;
+
+                li a {
+                    font-size: 0.9em;
+                    display: block;
+                    padding: 0.5em 2em;
+                }
+                li {
+                    width: 15em;
+                    border-bottom: solid 1px #eee;
+                }
+            }
+        }
     }
 }
 
@@ -146,9 +209,6 @@ header nav {
  **/
 
 $footer-height: 10em;
-$neutral-color: #8B8865;
-$primary-color: #64578B;
-$secondary-color: #37343F;
 
 body {
     position: relative;
